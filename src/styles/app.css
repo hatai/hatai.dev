@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --bg: #fbfaf8;
+  --fg: #1c1b18;
+  --muted: #6f6c66;
+  --line: #e5e2db;
+  --accent: #9a3412;
+  --accent-soft: rgba(154, 52, 18, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121211;
+    --fg: #e9e7e2;
+    --muted: #a09d95;
+    --line: #2a2926;
+    --accent: #fb923c;
+    --accent-soft: rgba(251, 146, 60, 0.1);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+    monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+  ::selection {
+    background-color: var(--accent-soft);
+  }
+}
+
+/* Map typography-plugin prose colors onto the site palette (light/dark aware) */
+.prose {
+  --tw-prose-body: var(--fg);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-links: var(--accent);
+  --tw-prose-code: var(--fg);
+  --tw-prose-quotes: var(--muted);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-hr: var(--line);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--line);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+}
