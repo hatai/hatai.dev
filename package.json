@@ -1,0 +1,36 @@
+{
+  "name": "hatai.dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "generate-routes": "tsr generate",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/solid-router": "latest",
+    "@tanstack/solid-start": "latest",
+    "js-yaml": "^5.3.0",
+    "marked": "^18.0.10",
+    "solid-js": "^1.9.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/router-cli": "^1.133.21",
+    "@types/js-yaml": "^4.0.9",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.0",
+    "vite-plugin-solid": "^2.11.12",
+    "vitest": "^4.1.11"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lightningcss"
+    ]
+  }
+}
