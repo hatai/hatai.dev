@@ -7,7 +7,8 @@
     "generate-routes": "tsr generate",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@tanstack/solid-router": "latest",
@@ -26,11 +27,5 @@
     "vite": "^8.0.0",
     "vite-plugin-solid": "^2.11.12",
     "vitest": "^4.1.11"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
   }
 }

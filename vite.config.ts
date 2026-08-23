@@ -1,10 +1,18 @@
 import { defineConfig } from 'vite'
-
 import { tanstackStart } from '@tanstack/solid-start/plugin/vite'
-
-import solidPlugin from 'vite-plugin-solid'
+import tailwindcss from '@tailwindcss/vite'
+import solid from 'vite-plugin-solid'
 
 export default defineConfig({
-  resolve: { tsconfigPaths: true },
-  plugins: [tanstackStart(), solidPlugin({ ssr: true })],
+  plugins: [
+    // tanstackStart must come before the solid plugin
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+    }),
+    tailwindcss(),
+    solid({ ssr: true }),
+  ],
 })
