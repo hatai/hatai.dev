@@ -27,12 +27,16 @@ describe('alternateLocalePath', () => {
     expect(alternateLocalePath('ja', '/ja')).toBe('/')
     expect(alternateLocalePath('ja', '/ja/blog/x')).toBe('/blog/x')
   })
+  it('does not treat /ja-prefixed other segments as the locale prefix', () => {
+    expect(alternateLocalePath('ja', '/jack')).toBe('/jack')
+  })
 })
 
 describe('localeFromPath', () => {
   it('detects the locale from a pathname', () => {
     expect(localeFromPath('/')).toBe<Locale>('en')
     expect(localeFromPath('/blog/x')).toBe<Locale>('en')
+    expect(localeFromPath('/jack')).toBe<Locale>('en')
     expect(localeFromPath('/ja')).toBe<Locale>('ja')
     expect(localeFromPath('/ja/blog/x')).toBe<Locale>('ja')
   })
@@ -47,7 +51,7 @@ describe('ui dictionary', () => {
           shape(nested).map((suffix) => (suffix === '[]' ? `${key}[]` : `${key}.${suffix}`)),
         )
       }
-      return []
+      return ['']
     }
     expect(shape(ui.ja)).toEqual(shape(ui.en))
   })
