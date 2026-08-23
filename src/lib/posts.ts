@@ -34,7 +34,14 @@ export function parsePostFile(name: string, source: string): Post {
     throw new Error(`missing frontmatter: ${name}`)
   }
 
-  const data = (loadYaml(sourceMatch[1].trim() || '{}') ?? {}) as Frontmatter
+  let data: Frontmatter
+  try {
+    data = (loadYaml(sourceMatch[1].trim() || '{}') ?? {}) as Frontmatter
+  } catch (err) {
+    throw new Error(
+      `invalid YAML frontmatter in ${name}: ${err instanceof Error ? err.message : String(err)}`,
+    )
+  }
   if (typeof data.title !== 'string' || data.title.length === 0) {
     throw new Error(`missing required frontmatter field "title": ${name}`)
   }

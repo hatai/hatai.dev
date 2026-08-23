@@ -14,6 +14,7 @@ export default defineConfig({
         // crawling; tolerate them until the route tree is complete.
         failOnError: false,
       },
+      pages: [{ path: '/404', prerender: { outputPath: '/404.html' } }],
     }),
     tailwindcss(),
     solid({ ssr: true }),
