@@ -21,6 +21,7 @@ export function PostPage(props: { locale: Locale }) {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'UTC',
     }).format(new Date(`${date}T00:00:00Z`))
 
   const current = post()

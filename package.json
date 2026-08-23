@@ -5,14 +5,15 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
-    "build": "vite build",
-    "start": "node .output/server/index.mjs",
+    "build": "vite build && node scripts/set-html-lang.mjs",
+    "start": "node dist/server/server.js",
     "preview": "vite preview",
+    "verify": "node scripts/verify-build.mjs dist/client",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@tanstack/solid-router": "latest",
-    "@tanstack/solid-start": "latest",
+    "@tanstack/solid-router": "^1.170.29",
+    "@tanstack/solid-start": "^1.168.46",
     "js-yaml": "^5.3.0",
     "marked": "^18.0.10",
     "solid-js": "^1.9.12"
@@ -21,7 +22,6 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/router-cli": "^1.133.21",
-    "@types/js-yaml": "^4.0.9",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",

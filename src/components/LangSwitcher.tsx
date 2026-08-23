@@ -1,14 +1,19 @@
+import { createMemo } from 'solid-js'
 import { Link, useLocation } from '@tanstack/solid-router'
 import { getPost, getTranslation } from '../lib/posts'
-import { alternateLocalePath, localeFromPath, ui } from '../lib/i18n'
+import { alternateLocalePath, localeFromPath, localePath, ui } from '../lib/i18n'
 
 export function LangSwitcher() {
   const pathname = useLocation({ select: (location) => location.pathname })
   const locale = () => localeFromPath(pathname())
   const other = () => (locale() === 'ja' ? 'en' : 'ja')
 
-  const target = () => {
+  const target = createMemo(() => {
     const current = pathname()
+    if (current === '/404') {
+      // The 404 page has no per-locale route; switch to the other locale's home.
+      return localePath(other(), '/')
+    }
     const match = /^\/(?:ja\/)?blog\/([^/]+)$/.exec(current)
     if (match) {
       // On a post page: link to the translation if it exists, else the other locale's blog index
@@ -20,7 +25,7 @@ export function LangSwitcher() {
       return other() === 'ja' ? '/ja/blog' : '/blog'
     }
     return alternateLocalePath(locale(), current)
-  }
+  })
 
   return (
     <Link
