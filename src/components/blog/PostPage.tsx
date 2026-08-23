@@ -31,6 +31,7 @@ export function PostPage(props: { locale: Locale }) {
         <h1 class="text-2xl font-bold tracking-tight">{t.notFound.title}</h1>
         <Link
           to={localePath(props.locale, '/blog')}
+          activeOptions={{ exact: true }}
           class="mt-6 inline-block text-accent underline underline-offset-4"
         >
           {t.blog.backToBlog}
@@ -51,6 +52,7 @@ export function PostPage(props: { locale: Locale }) {
             <p class="mt-2 text-sm">
               <Link
                 to={translatedHref()!}
+                lang={translated()!.lang}
                 class="text-accent underline underline-offset-4"
               >
                 {t.blog.readOther}
@@ -63,6 +65,7 @@ export function PostPage(props: { locale: Locale }) {
       <p class="mt-12 border-t border-line pt-6 text-sm">
         <Link
           to={localePath(props.locale, '/blog')}
+          activeOptions={{ exact: true }}
           class="text-accent underline underline-offset-4"
         >
           ← {t.blog.backToBlog}

@@ -15,14 +15,26 @@ export function Header() {
 
   return (
     <header class="mx-auto flex w-full max-w-2xl items-baseline justify-between px-5 pt-10 pb-6">
-      <Link to={localePath(locale(), '/')} class="font-semibold tracking-tight">
+      <Link
+        to={localePath(locale(), '/')}
+        activeOptions={{ exact: true }}
+        class="font-semibold tracking-tight"
+      >
         {profile.name[locale()]}
       </Link>
       <nav class="flex items-center gap-4" aria-label="site">
-        <Link to={localePath(locale(), '/')} class={navClass(localePath(locale(), '/'))}>
+        <Link
+          to={localePath(locale(), '/')}
+          activeOptions={{ exact: true }}
+          class={navClass(localePath(locale(), '/'))}
+        >
           {t().nav.home}
         </Link>
-        <Link to={localePath(locale(), '/blog')} class={navClass(localePath(locale(), '/blog'))}>
+        <Link
+          to={localePath(locale(), '/blog')}
+          activeOptions={{ exact: true }}
+          class={navClass(localePath(locale(), '/blog'))}
+        >
           {t().nav.blog}
         </Link>
         <LangSwitcher />

@@ -22,6 +22,7 @@ const pages = [
     'ja/blog/why-i-built-this-site-with-tanstack-solid-start/index.html',
     'このサイトを TanStack Solid Start で作った理由',
   ],
+  ['404.html', 'Page not found'],
 ]
 
 for (const [file, needle] of pages) {

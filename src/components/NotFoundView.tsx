@@ -7,7 +7,7 @@ export function NotFoundView() {
   const t = () => ui[locale()]
 
   return (
-    <main class="mx-auto w-full max-w-2xl px-5 py-24">
+    <main id="content" class="mx-auto w-full max-w-2xl px-5 py-24">
       <h1 class="text-3xl font-bold tracking-tight">{t().notFound.title}</h1>
       <p class="mt-3 text-muted">{t().notFound.lead}</p>
       <Link
