@@ -3,6 +3,7 @@ import {
   Outlet,
   Scripts,
   createRootRoute,
+  useLocation,
 } from '@tanstack/solid-router'
 
 import { HydrationScript } from 'solid-js/web'
@@ -11,6 +12,7 @@ import { Suspense } from 'solid-js'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { NotFoundView } from '../components/NotFoundView'
+import { localeFromPath, ui } from '../lib/i18n'
 import appCss from '../styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -47,13 +49,16 @@ function RootDocument() {
 }
 
 function RootLayout() {
+  const pathname = useLocation({ select: (location) => location.pathname })
+  const t = () => ui[localeFromPath(pathname())]
+
   return (
     <>
       <a
         href="#content"
         class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-bg focus:px-3 focus:py-2"
       >
-        Skip to content
+        {t().skipToContent}
       </a>
       <div class="flex min-h-dvh flex-col">
         <Header />
