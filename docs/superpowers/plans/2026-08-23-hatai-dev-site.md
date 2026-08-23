@@ -13,7 +13,7 @@
 - Design is APPROVED — do not re-propose. Minimal, typography-centered, responsive, light/dark via `prefers-color-scheme` media query only (NO JavaScript theme toggle).
 - i18n by URL prefix: `/` = English (default), `/ja` = Japanese. Blog articles are independent per language, cross-linked by frontmatter `translationKey`; one-sided posts are valid.
 - Site URL is `https://hatai.dev` (domain not yet acquired — build assumes it anyway). Contact email is `me@hatai.dev` (Cloudflare Email Routing, configured at deploy time).
-- Static output only: Cloudflare Pages Git integration, build command `pnpm build`, output directory expected `.output/public` (verify in Task 1; if the scaffold emits elsewhere, record the actual dir and use it consistently).
+- Static output only: Cloudflare Pages Git integration, build command `pnpm build`, output directory `dist/client` (recorded in Task 1: vite 8 / @tanstack/solid-start 1.168.46 emit here, NOT `.output/public`).
 - Node >= 22, pnpm package manager. All user-facing site copy: EN and JA per locale. Code identifiers/comments: English.
 - Identity data (verified from `~/repos/hatai/job/resume-draft.md`): name EN `Taigen Hamada`, JA `濱田 泰玄`; GitHub `https://github.com/hatai`; LinkedIn `https://linkedin.com/in/hamadataigen`; availability 20–30 hrs/week contractor, JST, async-first.
 - tanstackStart plugin MUST come before the `vite-plugin-solid` plugin in `vite.config.ts` (verified requirement).
@@ -57,7 +57,7 @@ If a flag is rejected, run `pnpm dlx @tanstack/cli@latest create --help` and ada
 ```bash
 cd ~/repos/hatai/hatai.dev
 pnpm add js-yaml marked
-pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography @types/js-yaml vitest
+pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography vitest
 ```
 
 - [ ] **Step 4: Write final `vite.config.ts`**
@@ -173,12 +173,16 @@ describe('alternateLocalePath', () => {
     expect(alternateLocalePath('ja', '/ja')).toBe('/')
     expect(alternateLocalePath('ja', '/ja/blog/x')).toBe('/blog/x')
   })
+  it('does not treat /ja-prefixed other segments as the locale prefix', () => {
+    expect(alternateLocalePath('ja', '/jack')).toBe('/jack')
+  })
 })
 
 describe('localeFromPath', () => {
   it('detects the locale from a pathname', () => {
     expect(localeFromPath('/')).toBe<Locale>('en')
     expect(localeFromPath('/blog/x')).toBe<Locale>('en')
+    expect(localeFromPath('/jack')).toBe<Locale>('en')
     expect(localeFromPath('/ja')).toBe<Locale>('ja')
     expect(localeFromPath('/ja/blog/x')).toBe<Locale>('ja')
   })
@@ -193,7 +197,7 @@ describe('ui dictionary', () => {
           shape(nested).map((suffix) => (suffix === '[]' ? `${key}[]` : `${key}.${suffix}`)),
         )
       }
-      return []
+      return ['']
     }
     expect(shape(ui.ja)).toEqual(shape(ui.en))
   })
@@ -211,15 +215,10 @@ Expected: FAIL — cannot resolve `./i18n`.
 export type Locale = 'en' | 'ja'
 
 const en = {
-  siteName: 'Taigen Hamada',
-  siteTagline: 'Full-Stack Software Engineer · AI-Native',
   nav: { home: 'Home', blog: 'Blog' },
   langLabel: '日本語',
   skipToContent: 'Skip to content',
   home: {
-    availability: 'Available 20–30 hrs/week as an independent contractor · Remote · Japan (JST)',
-    summary:
-      'Full-stack software engineer with 10 years of experience building production web services end-to-end — POS systems, real-time video streaming, reservation platforms, and healthcare SaaS. Tech lead (PL/PM) and hands-on engineer on teams of 3–6.',
     ctaGitHub: 'GitHub',
     ctaLinkedIn: 'LinkedIn',
     ctaEmail: 'Email',
@@ -249,15 +248,10 @@ const en = {
 }
 
 const ja: typeof en = {
-  siteName: '濱田 泰玄',
-  siteTagline: 'フルスタックエンジニア · AIネイティブ',
   nav: { home: 'ホーム', blog: 'ブログ' },
   langLabel: 'English',
   skipToContent: 'コンテンツへスキップ',
   home: {
-    availability: '独立契約(業務委託)で週20〜30時間対応可能 · リモート · 日本(JST)',
-    summary:
-      'POSシステム、リアルタイム動画配信、予約プラットフォーム、ヘルスケアSaaSなど、プロダクションのWebサービスをEnd-to-Endで構築してきたフルスタックエンジニア(経験10年)。3〜6名チームでテックリード(PL/PM)と実装を兼任。',
     ctaGitHub: 'GitHub',
     ctaLinkedIn: 'LinkedIn',
     ctaEmail: 'メール',
@@ -451,7 +445,7 @@ export function LangSwitcher() {
       lang={other()}
       class="rounded-md border border-line px-2.5 py-1 text-sm text-muted transition-colors hover:border-accent hover:text-accent"
     >
-      {ui[other()].langLabel}
+      {ui[locale()].langLabel}
     </Link>
   )
 }
@@ -489,6 +483,7 @@ Task 4 replaces this file wholesale.
 import { Link, useLocation } from '@tanstack/solid-router'
 import { LangSwitcher } from './LangSwitcher'
 import { localeFromPath, localePath, ui } from '../lib/i18n'
+import { profile } from '../lib/profile'
 
 export function Header() {
   const pathname = useLocation({ select: (location) => location.pathname })
@@ -502,14 +497,14 @@ export function Header() {
 
   return (
     <header class="mx-auto flex w-full max-w-2xl items-baseline justify-between px-5 pt-10 pb-6">
-      <Link href={localePath(locale(), '/')} class="font-semibold tracking-tight">
-        {t().siteName}
+      <Link to={localePath(locale(), '/')} class="font-semibold tracking-tight">
+        {profile.name[locale()]}
       </Link>
       <nav class="flex items-center gap-4" aria-label="site">
-        <Link href={localePath(locale(), '/')} class={navClass(localePath(locale(), '/'))}>
+        <Link to={localePath(locale(), '/')} class={navClass(localePath(locale(), '/'))}>
           {t().nav.home}
         </Link>
-        <Link href={localePath(locale(), '/blog')} class={navClass(localePath(locale(), '/blog'))}>
+        <Link to={localePath(locale(), '/blog')} class={navClass(localePath(locale(), '/blog'))}>
           {t().nav.blog}
         </Link>
         <LangSwitcher />
@@ -530,12 +525,13 @@ import { profile } from '../lib/profile'
 
 export function Footer() {
   const pathname = useLocation({ select: (location) => location.pathname })
-  const t = () => ui[localeFromPath(pathname())]
+  const locale = () => localeFromPath(pathname())
+  const t = () => ui[locale()]
 
   return (
     <footer class="mx-auto w-full max-w-2xl px-5 pt-10 pb-12">
       <div class="flex flex-col gap-1 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:justify-between">
-        <p>© 2026 {profile.name.en}</p>
+        <p>© 2026 {profile.name[locale()]}</p>
         <p>{t().footer.builtWith}</p>
       </div>
     </footer>
@@ -569,7 +565,7 @@ export function NotFoundView() {
       <h1 class="text-3xl font-bold tracking-tight">{t().notFound.title}</h1>
       <p class="mt-3 text-muted">{t().notFound.lead}</p>
       <Link
-        href={localePath(locale(), '/')}
+        to={localePath(locale(), '/')}
         class="mt-8 inline-block text-accent underline underline-offset-4"
       >
         {t().notFound.backHome}
@@ -582,7 +578,16 @@ export function NotFoundView() {
 - [ ] **Step 8: Replace `src/routes/__root.tsx`**
 
 ```tsx
-import { createRootRoute, Outlet } from '@tanstack/solid-router'
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from '@tanstack/solid-router'
+
+import { HydrationScript } from 'solid-js/web'
+import { Suspense } from 'solid-js'
+
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { NotFoundView } from '../components/NotFoundView'
@@ -599,9 +604,27 @@ export const Route = createRootRoute({
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
     ],
   }),
+  shellComponent: RootDocument,
   component: RootLayout,
   notFoundComponent: NotFoundView,
 })
+
+function RootDocument() {
+  return (
+    <html>
+      <head>
+        <HydrationScript />
+        <HeadContent />
+      </head>
+      <body>
+        <Suspense>
+          <RootLayout />
+        </Suspense>
+        <Scripts />
+      </body>
+    </html>
+  )
+}
 
 function RootLayout() {
   return (
@@ -623,6 +646,8 @@ function RootLayout() {
   )
 }
 ```
+
+(`shellComponent` provides the html/head/body document shell — TanStack Start requires it for a complete prerendered document; `HeadContent` renders route head() output, `Scripts` the hydration payload.)
 
 (The skip link is intentionally English-only: assistive-tech users get a consistent landmark; keep it.)
 
@@ -733,7 +758,7 @@ Expected: FAIL — `parsePostFile` not exported.
 
 ```ts
 import { parse } from 'marked'
-import yaml from 'js-yaml'
+import { load as loadYaml } from 'js-yaml'
 import type { Locale } from './i18n'
 
 export interface Post {
@@ -768,7 +793,7 @@ export function parsePostFile(name: string, source: string): Post {
     throw new Error(`missing frontmatter: ${name}`)
   }
 
-  const data = (yaml.load(sourceMatch[1]) ?? {}) as Frontmatter
+  const data = (loadYaml(sourceMatch[1].trim() || '{}') ?? {}) as Frontmatter
   if (typeof data.title !== 'string' || data.title.length === 0) {
     throw new Error(`missing required frontmatter field "title": ${name}`)
   }
@@ -1161,8 +1186,8 @@ export function Hero(props: { locale: Locale }) {
     <div class="pt-10 pb-4">
       <h1 class="text-4xl font-bold tracking-tight text-balance">{p.name[props.locale]}</h1>
       <p class="mt-3 text-lg text-muted">{p.title[props.locale]}</p>
-      <p class="mt-6 max-w-prose leading-relaxed">{t.home.summary}</p>
-      <p class="mt-4 text-sm text-muted">{t.home.availability}</p>
+      <p class="mt-6 max-w-prose leading-relaxed">{p.summary[props.locale]}</p>
+      <p class="mt-4 text-sm text-muted">{p.availability[props.locale]}</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a
           href={`mailto:${p.email}`}
@@ -1189,7 +1214,7 @@ export function Hero(props: { locale: Locale }) {
       </div>
       <p class="mt-8 text-sm">
         <Link
-          href={localePath(props.locale, '/blog')}
+          to={localePath(props.locale, '/blog')}
           class="text-accent underline underline-offset-4"
         >
           {t.home.viewBlog} →
@@ -1601,7 +1626,7 @@ export function BlogIndex(props: { locale: Locale }) {
           {posts.map((post) => (
             <li>
               <Link
-                href={localePath(props.locale, `/blog/${post.slug}`)}
+                to={localePath(props.locale, `/blog/${post.slug}`)}
                 class="text-lg font-semibold tracking-tight text-fg transition-colors hover:text-accent"
               >
                 {post.title}
@@ -1655,7 +1680,7 @@ export function PostPage(props: { locale: Locale }) {
       <main id="content" class="mx-auto w-full max-w-2xl px-5 pt-16">
         <h1 class="text-2xl font-bold tracking-tight">{t.notFound.title}</h1>
         <Link
-          href={localePath(props.locale, '/blog')}
+          to={localePath(props.locale, '/blog')}
           class="mt-6 inline-block text-accent underline underline-offset-4"
         >
           {t.blog.backToBlog}
@@ -1675,7 +1700,7 @@ export function PostPage(props: { locale: Locale }) {
           {translatedHref() && (
             <p class="mt-2 text-sm">
               <Link
-                href={translatedHref()!}
+                to={translatedHref()!}
                 class="text-accent underline underline-offset-4"
               >
                 {t.blog.readOther}
@@ -1687,7 +1712,7 @@ export function PostPage(props: { locale: Locale }) {
       </article>
       <p class="mt-12 border-t border-line pt-6 text-sm">
         <Link
-          href={localePath(props.locale, '/blog')}
+          to={localePath(props.locale, '/blog')}
           class="text-accent underline underline-offset-4"
         >
           ← {t.blog.backToBlog}
@@ -1707,11 +1732,12 @@ import { createFileRoute } from '@tanstack/solid-router'
 import { BlogIndex } from '../../components/blog/BlogIndex'
 import { ui } from '../../lib/i18n'
 import { SITE_URL } from '../../lib/site'
+import { profile } from '../../lib/profile'
 
 export const Route = createFileRoute('/blog/')({
   head: () => ({
     meta: [
-      { title: `${ui.en.blog.title} — ${ui.en.siteName}` },
+      { title: `${ui.en.blog.title} — ${profile.name.en}` },
       { name: 'description', content: ui.en.blog.description },
       { property: 'og:title', content: ui.en.blog.title },
       { property: 'og:description', content: ui.en.blog.description },
@@ -1737,11 +1763,12 @@ import { createFileRoute } from '@tanstack/solid-router'
 import { BlogIndex } from '../../components/blog/BlogIndex'
 import { ui } from '../../lib/i18n'
 import { SITE_URL } from '../../lib/site'
+import { profile } from '../../lib/profile'
 
 export const Route = createFileRoute('/ja/blog/')({
   head: () => ({
     meta: [
-      { title: `${ui.ja.blog.title} — ${ui.ja.siteName}` },
+      { title: `${ui.ja.blog.title} — ${profile.name.ja}` },
       { name: 'description', content: ui.ja.blog.description },
       { property: 'og:title', content: ui.ja.blog.title },
       { property: 'og:description', content: ui.ja.blog.description },
@@ -1767,6 +1794,7 @@ import { createFileRoute } from '@tanstack/solid-router'
 import { PostPage } from '../../components/blog/PostPage'
 import { getPost, getTranslation } from '../../lib/posts'
 import { SITE_URL } from '../../lib/site'
+import { profile } from '../../lib/profile'
 
 export const Route = createFileRoute('/blog/$slug')({
   head: ({ params }) => {
@@ -1775,7 +1803,7 @@ export const Route = createFileRoute('/blog/$slug')({
     const translated = getTranslation(post)
     return {
       meta: [
-        { title: `${post.title} — Taigen Hamada` },
+        { title: `${post.title} — ${profile.name.en}` },
         { name: 'description', content: post.description },
         { property: 'og:type', content: 'article' },
         { property: 'og:title', content: post.title },
@@ -1814,6 +1842,7 @@ import { createFileRoute } from '@tanstack/solid-router'
 import { PostPage } from '../../components/blog/PostPage'
 import { getPost, getTranslation } from '../../lib/posts'
 import { SITE_URL } from '../../lib/site'
+import { profile } from '../../lib/profile'
 
 export const Route = createFileRoute('/ja/blog/$slug')({
   head: ({ params }) => {
@@ -1822,7 +1851,7 @@ export const Route = createFileRoute('/ja/blog/$slug')({
     const translated = getTranslation(post)
     return {
       meta: [
-        { title: `${post.title} — 濱田 泰玄` },
+        { title: `${post.title} — ${profile.name.ja}` },
         { name: 'description', content: post.description },
         { property: 'og:type', content: 'article' },
         { property: 'og:title', content: post.title },
@@ -1900,13 +1929,28 @@ git commit -m "feat: bilingual blog with markdown content pipeline and 404"
 ### Task 9: Final Verification, README & Deploy Docs
 
 **Files:**
-- Create: `scripts/verify-build.mjs`
+- Create: `scripts/verify-build.mjs`, `scripts/set-html-lang.mjs`
 - Create: `README.md`
-- Modify: `package.json` (verify script)
+- Modify: `package.json` (verify script, build script, deps, start script)
+- Modify: `vite.config.ts` (remove interim `failOnError: false`)
+- Modify: `src/components/LangSwitcher.tsx` (404 special-case)
+- Modify: `src/components/blog/BlogIndex.tsx`, `src/components/blog/PostPage.tsx` (timeZone: 'UTC')
+- Modify: `src/styles/app.css` (prose pre token mapping)
 
 **Interfaces:**
-- Consumes: everything built in Tasks 1–8; the output dir recorded in Task 1.
-- Produces: `pnpm verify` gate used before every deploy; README with deploy steps.
+- Consumes: everything built in Tasks 1–8; the output dir recorded in Task 1 (`dist/client`).
+- Produces: `pnpm verify` gate used before every deploy; README with deploy steps; deterministic build output.
+
+- [ ] **Step 0: Cross-task fixes (accumulated review queue)**
+
+1. `src/components/LangSwitcher.tsx`: special-case `pathname() === '/404'` → target is `localePath(other(), '/')` (a 404 has no per-locale route; without this the crawler hits `/ja/404` and fails once `failOnError` is restored).
+2. `src/components/blog/BlogIndex.tsx` + `src/components/blog/PostPage.tsx`: add `timeZone: 'UTC'` to both `Intl.DateTimeFormat` constructors (build-machine-independent dates).
+3. `src/styles/app.css`: in the `.prose` block add `--tw-prose-pre-bg: var(--color-line);` and `--tw-prose-pre-code: var(--fg);` (code blocks follow the token system in both schemes).
+4. `vite.config.ts`: remove the interim `prerender.failOnError: false` (added in Task 3).
+5. `scripts/set-html-lang.mjs` (new): recursively rewrite `<html` tags in `dist/client/**/*.html` — `lang="ja"` for paths under `ja/`, `lang="en"` otherwise (router head API cannot set html attributes; static output makes a post-build rewrite correct). Wire it into `package.json` as `"build": "vite build && node scripts/set-html-lang.mjs"` (match the actual scaffold build command if it differs — keep the prerender step intact).
+6. `package.json`: fix the dead `start` script (points at nonexistent `.output/server/index.mjs`) — replace with `node dist/server/server.js` or remove it; pin `@tanstack/solid-start` / `@tanstack/solid-router` from `latest` to caret ranges of the locked versions (1.168.46 / 1.170.29); remove the `@types/js-yaml` devDep (js-yaml v5 ships its own types). Run `pnpm install` to update the lockfile after edits.
+
+Verification for Step 0: `pnpm test` (22/22), `pnpm build` (must succeed with failOnError at its default — this proves no crawl target 404s), emitted `<html lang="ja">` present in `dist/client/ja/index.html`.
 
 - [ ] **Step 1: Write `scripts/verify-build.mjs`**
 
@@ -1914,7 +1958,7 @@ git commit -m "feat: bilingual blog with markdown content pipeline and 404"
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-const root = resolve(process.argv[2] ?? '.output/public')
+const root = resolve(process.argv[2] ?? 'dist/client')
 let failed = 0
 
 const pages = [
@@ -1960,7 +2004,7 @@ process.exit(failed ? 1 : 0)
 
 - [ ] **Step 2: Add the script**
 
-In `package.json` `scripts`: `"verify": "node scripts/verify-build.mjs"` (pass the real output dir explicitly if it differs from `.output/public`).
+In `package.json` `scripts`: `"verify": "node scripts/verify-build.mjs dist/client"` (recorded in Task 1: the actual build output directory is `dist/client`, not `.output/public`). Also in Task 9: remove the interim `failOnError: false` from vite.config.ts `prerender` (added in Task 3 because `/blog` and `/ja` routes did not exist yet); fix the scaffold's dead `start` script (points at nonexistent `.output/server/index.mjs`) — replace with `node dist/server/server.js` or remove; pin `@tanstack/solid-start` / `@tanstack/solid-router` from `latest` to caret ranges of the locked versions (1.168.46 / 1.170.29); and remove the now-unneeded `@types/js-yaml` devDep (js-yaml v5 ships its own types). The verify script default root: replace `'.output/public'` with `'dist/client'`.
 
 - [ ] **Step 3: Run the full gate**
 
@@ -1968,7 +2012,7 @@ In `package.json` `scripts`: `"verify": "node scripts/verify-build.mjs"` (pass t
 pnpm test && pnpm build && pnpm verify
 ```
 
-Expected: all tests pass; build prerenders every page; verify prints OK for all entries and exits 0.
+Expected: all tests pass; build prerenders every page WITH `failOnError` back at its default (build fails loudly on prerender errors); verify prints OK for all entries and exits 0.
 
 - [ ] **Step 4: Write `README.md`**
 
@@ -2009,7 +2053,7 @@ other locale's blog index when no translation exists.
 2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git →
    select the repo.
 3. Build settings: framework preset **none**, build command `pnpm build`,
-   output directory `.output/public`, node version env `NODE_VERSION=22`.
+   output directory `dist/client`, node version env `NODE_VERSION=22`.
 4. Production branch `main`; every push deploys automatically.
 
 ## Domain & email (one-time, manual)
