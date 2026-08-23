@@ -1,15 +1,10 @@
 export type Locale = 'en' | 'ja'
 
 const en = {
-  siteName: 'Taigen Hamada',
-  siteTagline: 'Full-Stack Software Engineer · AI-Native',
   nav: { home: 'Home', blog: 'Blog' },
   langLabel: '日本語',
   skipToContent: 'Skip to content',
   home: {
-    availability: 'Available 20–30 hrs/week as an independent contractor · Remote · Japan (JST)',
-    summary:
-      'Full-stack software engineer with 10 years of experience building production web services end-to-end — POS systems, real-time video streaming, reservation platforms, and healthcare SaaS. Tech lead (PL/PM) and hands-on engineer on teams of 3–6.',
     ctaGitHub: 'GitHub',
     ctaLinkedIn: 'LinkedIn',
     ctaEmail: 'Email',
@@ -39,15 +34,10 @@ const en = {
 }
 
 const ja: typeof en = {
-  siteName: '濱田 泰玄',
-  siteTagline: 'フルスタックエンジニア · AIネイティブ',
   nav: { home: 'ホーム', blog: 'ブログ' },
   langLabel: 'English',
   skipToContent: 'コンテンツへスキップ',
   home: {
-    availability: '独立契約(業務委託)で週20〜30時間対応可能 · リモート · 日本(JST)',
-    summary:
-      'POSシステム、リアルタイム動画配信、予約プラットフォーム、ヘルスケアSaaSなど、プロダクションのWebサービスをEnd-to-Endで構築してきたフルスタックエンジニア(経験10年)。3〜6名チームでテックリード(PL/PM)と実装を兼任。',
     ctaGitHub: 'GitHub',
     ctaLinkedIn: 'LinkedIn',
     ctaEmail: 'メール',

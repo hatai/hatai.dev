@@ -1,6 +1,7 @@
 import { Link, useLocation } from '@tanstack/solid-router'
 import { LangSwitcher } from './LangSwitcher'
 import { localeFromPath, localePath, ui } from '../lib/i18n'
+import { profile } from '../lib/profile'
 
 export function Header() {
   const pathname = useLocation({ select: (location) => location.pathname })
@@ -15,7 +16,7 @@ export function Header() {
   return (
     <header class="mx-auto flex w-full max-w-2xl items-baseline justify-between px-5 pt-10 pb-6">
       <Link to={localePath(locale(), '/')} class="font-semibold tracking-tight">
-        {t().siteName}
+        {profile.name[locale()]}
       </Link>
       <nav class="flex items-center gap-4" aria-label="site">
         <Link to={localePath(locale(), '/')} class={navClass(localePath(locale(), '/'))}>
