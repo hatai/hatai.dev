@@ -73,7 +73,7 @@ export const profile = {
         "Python",
         "PHP",
         "Java",
-        "+ Kotlin, C++11, Lua",
+        "+ Kotlin, C++11, Lua, Rust, Go, Elixir",
       ],
     },
     {
@@ -89,6 +89,7 @@ export const profile = {
         "React Router v7",
         "React Admin",
         "Storybook",
+        "jQuery",
         "Sass",
       ],
     },
@@ -102,7 +103,9 @@ export const profile = {
         "Django",
         "Spring Boot",
         "CakePHP",
+        "FuelPHP",
         "Ktor",
+        "Phoenix",
       ],
     },
     {
@@ -121,13 +124,14 @@ export const profile = {
         "GitHub Actions",
         "CircleCI",
         "Firebase",
+        "Supabase",
         "Cloudflare",
       ],
     },
     {
       category: { en: "Auth / Others", ja: "認証 / その他" },
       starred: false,
-      skills: ["Auth0", "Twilio", "Vite", "Webpack", "Git"],
+      skills: ["Auth0", "Clerk", "Twilio", "Vite", "Webpack", "Git"],
     },
   ],
   jobs: [
@@ -223,7 +227,7 @@ export const profile = {
       },
     },
     {
-      company: { en: "Network21", ja: "Network21" },
+      company: { en: "Network21 / Digital Hearts", ja: "Network21 / デジタルハーツ" },
       role: { en: "Software Engineer", ja: "ソフトウェアエンジニア" },
       period: { en: "May 2016 – Apr 2018", ja: "2016年5月 – 2018年4月" },
       location: { en: "Tokyo, Japan", ja: "東京" },
@@ -232,10 +236,12 @@ export const profile = {
         en: [
           "Developed an iPad/iPhone POS register application: Java/Spring backend + Objective-C iOS app.",
           "As main programmer, built a web scraping tool that detects cross-site-request vulnerabilities — launched as a new business line with significant early revenue.",
+          "Continuously developed test automation (Java/Selenium) on a 5-person team for Digital Hearts, the group's parent test-services company (2017–2018).",
         ],
         ja: [
           "iPad/iPhone向けPOSレジアプリケーションを開発: Java/Springサーバーサイド + Objective-C iOSアプリ。",
           "メインプログラマとして、クロスサイトリクエスト脆弱性を検出するWebスクレイピングツールを構築 — 新規事業として立ち上げ、初期の大きな収益を創出。",
+          "グループの親会社でテストサービス企業のデジタルハーツにて、テスト自動化(Java/Selenium)の開発を5名チームで随時担当(2017〜2018年)。",
         ],
       },
     },

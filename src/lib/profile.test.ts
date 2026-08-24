@@ -16,7 +16,7 @@ describe('profile', () => {
   it('lists exactly the five known jobs, most recent first', () => {
     expect(profile.jobs).toHaveLength(5)
     expect(profile.jobs[0].company.en).toContain('iCARE')
-    expect(profile.jobs[4].company.en).toBe('Network21')
+    expect(profile.jobs[4].company.en).toBe('Network21 / Digital Hearts')
   })
 
   it('has non-empty localized fields for every job in both locales', () => {
