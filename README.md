@@ -1,6 +1,6 @@
 # hatai.dev
 
-Personal portfolio and blog for Taigen Hamada (EN `/` · JA `/ja`).
+Personal portfolio and blog for HAMADA Taigen (EN `/` · JA `/ja`).
 Static site: TanStack Solid Start, prerendered to plain HTML, deployed on Cloudflare Pages.
 
 ## Commands

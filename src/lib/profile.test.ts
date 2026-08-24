@@ -6,8 +6,8 @@ const locales: Locale[] = ['en', 'ja']
 
 describe('profile', () => {
   it('exposes identity and contact data', () => {
-    expect(profile.name.en).toBe('Taigen Hamada')
-    expect(profile.name.ja).toBe('濱田 泰玄')
+    expect(profile.name.en).toBe('HAMADA Taigen')
+    expect(profile.name.ja).toBe('濱田 泰源')
     expect(profile.email).toBe('me@hatai.dev')
     expect(profile.github).toBe('https://github.com/hatai')
     expect(profile.linkedin).toBe('https://linkedin.com/in/hamadataigen')

@@ -5,13 +5,13 @@ const root = resolve(process.argv[2] ?? 'dist/client')
 let failed = 0
 
 const pages = [
-  ['index.html', 'Taigen Hamada'],
+  ['index.html', 'HAMADA Taigen'],
   ['index.html', 'hreflang="ja"'],
   // set-html-lang appends lang as the final <html> attribute (after data-hk),
   // so ' lang="..">' anchors on the html tag and cannot match hreflang links.
   ['index.html', ' lang="en">'],
   ['ja/index.html', ' lang="ja">'],
-  ['ja/index.html', '濱田 泰玄'],
+  ['ja/index.html', '濱田 泰源'],
   ['blog/index.html', 'Why I Built This Site with TanStack Solid Start'],
   ['ja/blog/index.html', 'このサイトを TanStack Solid Start で作った理由'],
   [
