@@ -15,7 +15,7 @@
 - Site URL is `https://hatai.dev` (domain not yet acquired — build assumes it anyway). Contact email is `me@hatai.dev` (Cloudflare Email Routing, configured at deploy time).
 - Static output only: Cloudflare Pages Git integration, build command `pnpm build`, output directory `dist/client` (recorded in Task 1: vite 8 / @tanstack/solid-start 1.168.46 emit here, NOT `.output/public`).
 - Node >= 22, pnpm package manager. All user-facing site copy: EN and JA per locale. Code identifiers/comments: English.
-- Identity data (verified from `~/repos/hatai/job/resume-draft.md`): name EN `Taigen Hamada`, JA `濱田 泰玄`; GitHub `https://github.com/hatai`; LinkedIn `https://linkedin.com/in/hamadataigen`; availability 20–30 hrs/week contractor, JST, async-first.
+- Identity data (verified from `~/repos/hatai/job/resume-draft.md`): name EN `Taigen Hamada`, JA `濱田 泰源`; GitHub `https://github.com/hatai`; LinkedIn `https://linkedin.com/in/hamadataigen`; availability 20–30 hrs/week contractor, JST, async-first.
 - tanstackStart plugin MUST come before the `vite-plugin-solid` plugin in `vite.config.ts` (verified requirement).
 - Never render untrusted Markdown — all content under `src/content/` is authored by the site owner.
 - One commit per task (conventional commits). No placeholder text anywhere in shipped pages (`TBD`, `lorem`, etc.).
@@ -543,7 +543,7 @@ export function Footer() {
 
 ```ts
 export const profile = {
-  name: { en: 'Taigen Hamada', ja: '濱田 泰玄' },
+  name: { en: 'Taigen Hamada', ja: '濱田 泰源' },
 }
 ```
 
@@ -884,7 +884,7 @@ const locales: Locale[] = ['en', 'ja']
 describe('profile', () => {
   it('exposes identity and contact data', () => {
     expect(profile.name.en).toBe('Taigen Hamada')
-    expect(profile.name.ja).toBe('濱田 泰玄')
+    expect(profile.name.ja).toBe('濱田 泰源')
     expect(profile.email).toBe('me@hatai.dev')
     expect(profile.github).toBe('https://github.com/hatai')
     expect(profile.linkedin).toBe('https://linkedin.com/in/hamadataigen')
@@ -948,7 +948,7 @@ export interface SkillGroup {
 }
 
 export const profile = {
-  name: { en: 'Taigen Hamada', ja: '濱田 泰玄' },
+  name: { en: 'Taigen Hamada', ja: '濱田 泰源' },
   title: {
     en: 'Full-Stack Software Engineer · AI-Native',
     ja: 'フルスタックエンジニア · AIネイティブ',
@@ -1964,7 +1964,7 @@ let failed = 0
 const pages = [
   ['index.html', 'Taigen Hamada'],
   ['index.html', 'hreflang="ja"'],
-  ['ja/index.html', '濱田 泰玄'],
+  ['ja/index.html', '濱田 泰源'],
   ['blog/index.html', 'Why I Built This Site with TanStack Solid Start'],
   ['ja/blog/index.html', 'このサイトを TanStack Solid Start で作った理由'],
   [
