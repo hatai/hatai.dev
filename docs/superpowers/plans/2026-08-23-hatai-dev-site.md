@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** A bilingual (EN/JA) static portfolio + blog for Taigen Hamada, prerendered with TanStack Solid Start and deployed to Cloudflare Pages at `hatai.dev`.
+**Goal:** A bilingual (EN/JA) static portfolio + blog for HAMADA Taigen, prerendered with TanStack Solid Start and deployed to Cloudflare Pages at `hatai.dev`.
 
 **Architecture:** URL-prefix i18n (`/` = English default, `/ja` = Japanese). One shared layout and one set of bilingual section components driven by a typed data module (`profile.ts`) — no duplicated markup per locale. Blog posts are Markdown files with YAML frontmatter, loaded at build time via Vite `import.meta.glob('?raw')`, parsed with js-yaml, rendered with marked. Fully static: `prerender: { enabled: true, crawlLinks: true }` emits plain HTML; no server runtime.
 
@@ -15,7 +15,7 @@
 - Site URL is `https://hatai.dev` (domain not yet acquired — build assumes it anyway). Contact email is `me@hatai.dev` (Cloudflare Email Routing, configured at deploy time).
 - Static output only: Cloudflare Pages Git integration, build command `pnpm build`, output directory `dist/client` (recorded in Task 1: vite 8 / @tanstack/solid-start 1.168.46 emit here, NOT `.output/public`).
 - Node >= 22, pnpm package manager. All user-facing site copy: EN and JA per locale. Code identifiers/comments: English.
-- Identity data (verified from `~/repos/hatai/job/resume-draft.md`): name EN `Taigen Hamada`, JA `濱田 泰源`; GitHub `https://github.com/hatai`; LinkedIn `https://linkedin.com/in/hamadataigen`; availability 20–30 hrs/week contractor, JST, async-first.
+- Identity data (verified from `~/repos/hatai/job/resume-draft.md`): name EN `HAMADA Taigen`, JA `濱田 泰源`; GitHub `https://github.com/hatai`; LinkedIn `https://linkedin.com/in/hamadataigen`; availability 20–30 hrs/week contractor, JST, async-first.
 - tanstackStart plugin MUST come before the `vite-plugin-solid` plugin in `vite.config.ts` (verified requirement).
 - Never render untrusted Markdown — all content under `src/content/` is authored by the site owner.
 - One commit per task (conventional commits). No placeholder text anywhere in shipped pages (`TBD`, `lorem`, etc.).
@@ -543,7 +543,7 @@ export function Footer() {
 
 ```ts
 export const profile = {
-  name: { en: 'Taigen Hamada', ja: '濱田 泰源' },
+  name: { en: 'HAMADA Taigen', ja: '濱田 泰源' },
 }
 ```
 
@@ -883,7 +883,7 @@ const locales: Locale[] = ['en', 'ja']
 
 describe('profile', () => {
   it('exposes identity and contact data', () => {
-    expect(profile.name.en).toBe('Taigen Hamada')
+    expect(profile.name.en).toBe('HAMADA Taigen')
     expect(profile.name.ja).toBe('濱田 泰源')
     expect(profile.email).toBe('me@hatai.dev')
     expect(profile.github).toBe('https://github.com/hatai')
@@ -948,7 +948,7 @@ export interface SkillGroup {
 }
 
 export const profile = {
-  name: { en: 'Taigen Hamada', ja: '濱田 泰源' },
+  name: { en: 'HAMADA Taigen', ja: '濱田 泰源' },
   title: {
     en: 'Full-Stack Software Engineer · AI-Native',
     ja: 'フルスタックエンジニア · AIネイティブ',
@@ -1962,7 +1962,7 @@ const root = resolve(process.argv[2] ?? 'dist/client')
 let failed = 0
 
 const pages = [
-  ['index.html', 'Taigen Hamada'],
+  ['index.html', 'HAMADA Taigen'],
   ['index.html', 'hreflang="ja"'],
   ['ja/index.html', '濱田 泰源'],
   ['blog/index.html', 'Why I Built This Site with TanStack Solid Start'],
@@ -2019,7 +2019,7 @@ Expected: all tests pass; build prerenders every page WITH `failOnError` back at
 ````markdown
 # hatai.dev
 
-Personal portfolio and blog for Taigen Hamada (EN `/` · JA `/ja`).
+Personal portfolio and blog for HAMADA Taigen (EN `/` · JA `/ja`).
 Static site: TanStack Solid Start, prerendered to plain HTML, deployed on Cloudflare Pages.
 
 ## Commands

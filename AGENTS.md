@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Personal portfolio + blog for Taigen Hamada, bilingual EN (`/`) / JA (`/ja`). Static site: TanStack Solid Start prerendered to plain HTML, deployed on Cloudflare Pages (`dist/client`, `NODE_VERSION=22`, branch `main`). No analytics, comments, theme toggle, or server runtime — by design (see README "Not included").
+Personal portfolio + blog for HAMADA Taigen, bilingual EN (`/`) / JA (`/ja`). Static site: TanStack Solid Start prerendered to plain HTML, deployed on Cloudflare Pages (`dist/client`, `NODE_VERSION=22`, branch `main`). No analytics, comments, theme toggle, or server runtime — by design (see README "Not included").
 
 ## Architecture & Data Flow
 
