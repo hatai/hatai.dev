@@ -4,18 +4,21 @@ description: The stack, design, and deployment choices behind hatai.dev — a st
 date: 2026-08-24
 ---
 
-I am a full-stack engineer with ten years of experience, currently looking for remote contract work with overseas teams. This site is my portfolio and my blog — the place where I control the content, the design, and the stack. Here is why it is built the way it is.
+I am a full-stack engineer with 10 years of experience, currently looking for remote contract projects with overseas teams. This site serves as both my portfolio and my blog. In this post, I am writing about why I chose Solid.js and TanStack Start for this site's architecture.
 
-## Why a personal site at all
+## Why a Personal Website?
 
-Job platforms optimize for their matching pipeline, not for showing what you actually built. A personal site is the one URL I can put in a resume that is entirely mine: my work history in my words, in both English and Japanese, with no character limits.
+Job platforms are optimized for matching algorithms and do not feel suitable for expressing in detail what I have built and done so far.
+In contrast, a personal website can be included in a resume, is completely under your own control, and provides a place to express yourself. There are no character limits, and you can talk about your work history in your own words in both English and Japanese.
 
-## Why TanStack Solid Start
+## Why TanStack Solid Start?
 
-I spend most of my days in React and Vue, so I deliberately picked a stack I do not use at work. Two reasons:
+Since I use React and Vue on a daily basis, I intentionally chose a stack that I do not use for work.
 
-1. **Dogfooding a newer stack keeps my evaluation skills sharp.** A large part of my recent work is judging where AI-assisted development shines and where it fails. Building with an unfamiliar framework is exactly the kind of exercise that keeps that honest — and it gives me something real to write about.
-2. **It fits the actual requirement: a static site.** TanStack Start prerenders every route to plain HTML:
+There are two reasons:
+
+1. **Using a new stack maintains my evaluation skills.** One of my recent tasks involves determining where AI-assisted development works and where it fails. Building something with a framework I have never used before serves as great training for this and makes for good content.
+2. **TanStack Start is well-suited for static sites.** TanStack Start pre-renders all routes into plain HTML:
 
 ```ts
 // vite.config.ts
@@ -30,18 +33,19 @@ export default {
 }
 ```
 
-With `crawlLinks`, the crawler starts at `/`, follows every internal link, and emits a file per page. What ships to Cloudflare Pages is HTML and CSS with a small hydration payload — no server runtime, no database, nothing to babysit.
+By enabling `crawlLinks`, the crawler follows internal links from `/` and writes out a file for each page. What gets deployed to Cloudflare Pages is just HTML, CSS, and a small payload for hydration. There is no server runtime and no database.
 
-TanStack Router's type-safe file routing is also genuinely pleasant: routes are files, params are typed, and the link component validates `to` targets at compile time.
+TanStack Router's type-safe file-based routing is also genuinely comfortable. Routes are files, parameters are typed, and the Link component validates the `to` destination at compile time.
 
-## Bilingual by URL prefix
+## Bilingual Support via URL Prefixes
 
-The site is English at `/` and Japanese at `/ja`. Blog articles are independent per language — I write each one natively rather than machine-translating — and a `translationKey` in the frontmatter links a pair together. An article can exist in one language only; the language switcher falls back to the other locale's blog index.
+The site uses `/` for English and `/ja` for Japanese. Blog posts are independent for each language. Since my native language is Japanese, I utilize [Nani!? Translation](https://nani.now/) to translate from Japanese to English. Pairs are linked using the `translationKey` in the front matter, and articles written in only one language are also supported. In such cases, the language switcher falls back to the blog list of the other language.
+Nani!? is an exceptional AI-powered translation tool that I love using. I am also a fan of its creator, [catnose](https://x.com/catnose99).
 
-## Minimal by design
+## Minimalist Design
 
-Typography does the work: one accent color, a single content column at a comfortable measure, and light/dark handled entirely by `prefers-color-scheme` — no theme toggle JavaScript. Posts are Markdown files parsed at build time, rendered with `marked`, styled with Tailwind's typography plugin.
+There is only one accent color, a single-column layout with a line length that is easy to read, and light/dark modes are handled solely via `prefers-color-scheme` with no JavaScript for toggling. Articles are Markdown files parsed at build time, rendered with `marked`, and styled using Tailwind's typography plugin.
 
-## What comes next
+## What's Next
 
-More posts on AI-native development workflows: how I use Claude Code and Codex with spec-driven context, and what actually works in production. If that is the kind of experience you are hiring for, [get in touch](mailto:me@hatai.dev).
+I plan to write more articles about AI-native development workflows. How to use Claude Code and Codex with spec-driven context, and what actually worked in production. [If you are looking for someone with this kind of experience, please feel free to reach out](mailto:me@hatai.dev).
