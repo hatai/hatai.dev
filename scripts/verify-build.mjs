@@ -22,6 +22,8 @@ const pages = [
     'ja/blog/why-i-built-this-site-with-tanstack-solid-start/index.html',
     'このサイトを TanStack Solid Start で作った理由',
   ],
+  ['index.html', 'gitz'],
+  ['ja/index.html', 'gitz'],
   ['404.html', 'Page not found'],
 ]
 

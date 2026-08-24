@@ -40,4 +40,14 @@ describe('profile', () => {
     }
     expect(profile.skills.some((group) => group.starred)).toBe(true)
   })
+
+  it('lists personal projects with both locales populated', () => {
+    expect(profile.projects).toHaveLength(1)
+    expect(profile.projects[0].name).toBe('gitz')
+    expect(profile.projects[0].url).toMatch(/^https:/)
+    for (const locale of locales) {
+      expect(profile.projects[0].tagline[locale].length).toBeGreaterThan(0)
+      expect(profile.projects[0].description[locale].length).toBeGreaterThan(0)
+    }
+  })
 })

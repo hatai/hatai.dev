@@ -17,6 +17,14 @@ export interface SkillGroup {
   skills: string[];
 }
 
+export interface Project {
+  name: string
+  tagline: Localized<string>
+  description: Localized<string>
+  url: string
+  stack: string
+}
+
 export const profile = {
   name: { en: "HAMADA Taigen", ja: "濱田 泰源" },
   title: {
@@ -32,21 +40,23 @@ export const profile = {
     ja: "独立契約(業務委託)で週20〜30時間対応可能 · リモート · 日本(JST)",
   },
   summary: {
-    en: "Full-stack software engineer with 10 years of experience building production web services end-to-end — POS systems, real-time video streaming, reservation platforms, and healthcare SaaS. Tech lead (PL/PM) and hands-on engineer on teams of 3–6.",
-    ja: "POSシステム、リアルタイム動画配信、予約プラットフォーム、ヘルスケアSaaSなど、プロダクションのWebサービスをEnd-to-Endで構築してきたフルスタックエンジニア(経験10年)。3〜6名チームでテックリード(PL/PM)と実装を兼任。",
+    en: "Full-stack software engineer with 10 years of experience building production web services end-to-end — POS systems, real-time video streaming, reservation platforms, and healthcare SaaS. Currently: LLM document-processing in production and developer-platform work (CI/CD, test-suite performance). Tech lead (PL/PM) and hands-on engineer on teams of 3–6.",
+    ja: "POSシステム、リアルタイム動画配信、予約プラットフォーム、ヘルスケアSaaSなど、プロダクションのWebサービスをEnd-to-Endで構築してきたフルスタックエンジニア(経験10年)。現在はLLMによる文書処理の本番運用と、開発基盤の改善(CI/CD、テストスイート高速化)を担当。3〜6名チームでテックリード(PL/PM)と実装を兼任。",
   },
   highlights: {
     en: [
-      "Replaced a legacy OCR pipeline with LLM-based document extraction for health checkup records (PDF/images → structured data) at a healthcare SaaS serving Japanese enterprises — substantially higher accuracy.",
-      "Daily production user of Claude Code, Cursor, GitHub Copilot, Codex, and Devin — distilled the know-how into Agent Skills and shared it across the engineering team.",
+      "Shipped LLM-based document extraction to production at a healthcare SaaS — replaced a legacy OCR pipeline with substantially higher accuracy; owns the Python/FastAPI/LangChain pipeline and its task-queue workers on AWS.",
+      "Release engineering: rebuilt container CI/CD around a build-once model — prebuilt base images plus an ECR registry cache cut image builds from 17 minutes to under 5; added automated rollback and reusable deploy workflows (QA/staging/prod).",
+      "Test infrastructure: led a 9-part RSpec optimization project on a 100k+-commit Rails/Vue monorepo (CircleCI Gen2, test-suite splitting, auto-rerun) — individual suite runtimes cut by up to ~40%.",
+      "Daily production user of Claude Code, Cursor, GitHub Copilot, Codex, and Devin — distilled the know-how into agent skills (LangChain, Langfuse, FastAPI, Terraform, optimize-rspec) and shared them across the engineering team.",
       "Spec-driven development: write thorough design docs and context so coding agents deliver the intended result on the first pass.",
-      "LLM tooling: LangChain / LangGraph experience for LLM application development.",
     ],
     ja: [
-      "ヘルスケアSaaSにおいて、健康診断結果(PDF/画像 → 構造化データ)の既存OCRパイプラインをLLMベースの文書抽出に置き換え、精度を大幅に向上。",
-      "Claude Code、Cursor、GitHub Copilot、Codex、Devinを業務で毎日使用。ノウハウをAgent Skillsとして整理し、開発チーム全体に展開。",
+      "ヘルスケアSaaSでLLM文書抽出を本番投入 — 既存OCRパイプラインを置き換え、精度を大幅に向上。Python/FastAPI/LangChainパイプラインとタスクキューワーカーをAWS上で設計・運用。",
+      "リリースエンジニアリング: build-onceモデルへのCI/CD再構築。ベースイメージ事前ビルドとECRレジストリキャッシュでイメージビルドを17分→5分未満に短縮し、自動ロールバックとQA/staging/prod共通の再利用可能なデプロイワークフローを整備。",
+      "テスト基盤: 10万コミット超のRails/Vueモノリスで9分割のRSpec高速化プロジェクトを主導(CircleCI Gen2、テスト分割、自動リラン)。スイート単位の実行時間を最大約40%短縮。",
+      "Claude Code、Cursor、GitHub Copilot、Codex、Devinを業務で毎日使用。ノウハウをエージェントスキル(LangChain、Langfuse、FastAPI、Terraform、optimize-rspec)として整理し、開発チーム全体に展開。",
       "スペック駆動開発: 設計ドキュメントとコンテキストを丁寧に整備し、コーディングエージェントが一発で意図した成果物を出すための実践。",
-      "LLMアプリケーション開発における LangChain / LangGraph の利用経験。",
     ],
   },
   skills: [
@@ -61,6 +71,7 @@ export const profile = {
         "Devin",
         "LangChain",
         "LangGraph",
+        "Langfuse",
       ],
     },
     {
@@ -73,7 +84,7 @@ export const profile = {
         "Python",
         "PHP",
         "Java",
-        "+ Kotlin, C++11, Lua, Rust, Go, Elixir",
+        "+ Kotlin, C++11, Zig, Lua, Rust, Go, Elixir",
       ],
     },
     {
@@ -123,6 +134,7 @@ export const profile = {
         "Terraform",
         "GitHub Actions",
         "CircleCI",
+        "Datadog",
         "Firebase",
         "Supabase",
         "Cloudflare",
@@ -149,15 +161,19 @@ export const profile = {
       stack: "Vue.js, Ruby on Rails, Python, FastAPI, AWS, PostgreSQL",
       highlights: {
         en: [
-          "Built an LLM-based document ingestion feature: users photograph or scan health checkup results and the system structures the data — replacing OCR with LLMs for substantially higher accuracy.",
+          "Built the LLM document ingestion feature now in production: users photograph or scan health checkup results and the system structures the data — replacing OCR with LLMs for substantially higher accuracy; owns the FastAPI/LangChain pipeline and task-queue workers on AWS.",
           "Led a dedicated AI OCR R&D phase (Oct 2024 – Oct 2025): evaluated models and approaches on real-world documents, then designed and shipped the production pipeline.",
           "Designed a configurable rules engine for health-check conditions (e.g., metabolic syndrome criteria); the design was reused by later features, cutting future dev effort.",
+          "Release engineering and observability for the OCR service: build-once CI/CD (image builds 17 min → under 5 min), automated rollback workflows, Datadog APM dashboards, and retry instrumentation for queue workers.",
+          "Developer platform (2026): led a 9-part RSpec optimization of the Carely monorepo — CircleCI Gen2, test-suite splitting, auto-rerun, suite runtimes down up to ~40%; migrated frontend linting to type-aware oxlint and upgraded Bundler to 4.",
           "Led AI-tool adoption across the engineering org: Claude Code workflows and Agent Skills, improving team-wide productivity.",
         ],
         ja: [
-          "健康診断結果を撮影・スキャンするとデータを構造化するLLM文書取り込み機能を開発。OCRをLLMに置き換え、精度を大幅に向上。",
+          "健康診断結果を撮影・スキャンするとデータを構造化するLLM文書取り込み機能を本番投入。OCRをLLMに置き換え、精度を大幅に向上。FastAPI/LangChainパイプラインとタスクキューワーカーをAWS上で設計・運用。",
           "AI OCRのR&D専任期間(2024年10月〜2025年10月)を主導。実ドキュメントでモデル・方式を評価し、本番パイプラインを設計・実装。",
           "健康診断判定の設定可能なルールエンジン(メタボリックシンドローム基準など)を設計。柔軟な設計が他機能にも再利用され、開発コストを削減。",
+          "OCRサービスのリリースエンジニアリングとオブザーバビリティ: build-once CI/CD(イメージビルド17分→5分未満)、自動ロールバックワークフロー、Datadog APMダッシュボード、キューワーカーのリトライ計装を整備。",
+          "開発基盤(2026年): CarelyモノリスのRSpec高速化を9分割で主導 — CircleCI Gen2、テスト分割、自動リランによりスイート実行時間を最大約40%短縮。フロントエンドのlintをtype-awareなoxlintへ移行し、Bundlerを4へアップグレード。",
           "Claude CodeワークフローとAgent SkillsによるAIツール導入をエンジニア組織全体で推進し、チーム全体の生産性を向上。",
         ],
       },
@@ -244,6 +260,21 @@ export const profile = {
           "グループの親会社でテストサービス企業のデジタルハーツにて、テスト自動化(Java/Selenium)の開発を5名チームで随時担当(2017〜2018年)。",
         ],
       },
+    },
+  ],
+  projects: [
+    {
+      name: "gitz",
+      tagline: {
+        en: "A terminal git TUI in Zig, aiming for JetBrains-grade interaction",
+        ja: "JetBrains相当の操作感を目指す、Zig製ターミナルgit TUI",
+      },
+      description: {
+        en: "A commit-focused git TUI with a three-pane Changes/Diff/Commit flow, plus a log-view context menu for revert, cherry-pick, reset, tag, branch, and compare operations. 380+ commits of active solo development.",
+        ja: "Changes/Diff/Commitの3ペインでステージング・差分閲覧・コミットを行うgit TUI。ログビューのコンテキストメニューからrevert・cherry-pick・reset・tag・branch・compare操作にも対応。380以上のコミットで個人開発を継続中。",
+      },
+      url: "https://github.com/hatai/gitz",
+      stack: "Zig 0.16 · zigzag",
     },
   ],
 };

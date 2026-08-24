@@ -3,6 +3,7 @@ import { Hero } from './Hero'
 import { Highlights } from './Highlights'
 import { Skills } from './Skills'
 import { Experience } from './Experience'
+import { Projects } from './Projects'
 import { Contact } from './Contact'
 
 export function HomePage(props: { locale: Locale }) {
@@ -12,6 +13,7 @@ export function HomePage(props: { locale: Locale }) {
       <Highlights locale={props.locale} />
       <Skills locale={props.locale} />
       <Experience locale={props.locale} />
+      <Projects locale={props.locale} />
       <Contact locale={props.locale} />
     </main>
   )
