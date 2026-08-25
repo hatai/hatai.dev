@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { profile } from './profile'
+import { parseProfile, profile } from './profile'
 import type { Locale } from './i18n'
 
 const locales: Locale[] = ['en', 'ja']
@@ -52,5 +52,68 @@ describe('profile', () => {
         expect(project.description[locale].length).toBeGreaterThan(0)
       }
     }
+  })
+})
+
+const minimalProfileYaml = `
+name: {en: Test, ja: テスト}
+title: {en: Title, ja: タイトル}
+location: {en: Tokyo, ja: 東京}
+email: me@example.com
+github: https://github.com/example
+linkedin: https://linkedin.com/in/example
+availability: {en: Available, ja: 応談}
+summary: {en: Summary, ja: サマリー}
+highlights:
+  en: [one]
+  ja: [一]
+skills:
+  - category: {en: Core, ja: コア}
+    starred: true
+    skills: [something]
+jobs:
+  - company: {en: Acme, ja: アクメ}
+    role: {en: Engineer, ja: エンジニア}
+    period: {en: '2020', ja: 2020年}
+    location: {en: Tokyo, ja: 東京}
+    stack: stack
+    highlights:
+      en: [did]
+      ja: [やった]
+projects:
+  - name: demo
+    tagline: {en: Tagline, ja: タグライン}
+    description: {en: Description, ja: 説明}
+    url: https://github.com/example/demo
+    stack: stack
+`
+
+describe('parseProfile', () => {
+  it('parses a structurally complete profile', () => {
+    const parsed = parseProfile(minimalProfileYaml)
+    expect(parsed.name.ja).toBe('テスト')
+    expect(parsed.jobs).toHaveLength(1)
+  })
+
+  it('throws on invalid YAML', () => {
+    expect(() => parseProfile('name: [unclosed')).toThrow(/invalid YAML/)
+  })
+
+  it('throws with field context when a locale is missing', () => {
+    const broken = minimalProfileYaml.replace(
+      'name: {en: Test, ja: テスト}',
+      'name:\n  en: Test',
+    )
+    expect(() => parseProfile(broken)).toThrow(/name\.ja/)
+  })
+
+  it('throws when en/ja bullet counts differ', () => {
+    const broken = minimalProfileYaml.replace('en: [did]', 'en: [did, more]')
+    expect(() => parseProfile(broken)).toThrow(/counts differ/)
+  })
+
+  it('throws when no skill group is starred', () => {
+    const broken = minimalProfileYaml.replace('starred: true', 'starred: false')
+    expect(() => parseProfile(broken)).toThrow(/starred/)
   })
 })
