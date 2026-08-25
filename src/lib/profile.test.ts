@@ -42,12 +42,15 @@ describe('profile', () => {
   })
 
   it('lists personal projects with both locales populated', () => {
-    expect(profile.projects).toHaveLength(1)
-    expect(profile.projects[0].name).toBe('gitz')
-    expect(profile.projects[0].url).toMatch(/^https:/)
-    for (const locale of locales) {
-      expect(profile.projects[0].tagline[locale].length).toBeGreaterThan(0)
-      expect(profile.projects[0].description[locale].length).toBeGreaterThan(0)
+    expect(profile.projects).toHaveLength(6)
+    expect(profile.projects.map((project) => project.name)).toContain('gitz')
+    for (const project of profile.projects) {
+      expect(project.url).toMatch(/^https:\/\/github\.com\/hatai\//)
+      expect(project.stack.length).toBeGreaterThan(0)
+      for (const locale of locales) {
+        expect(project.tagline[locale].length).toBeGreaterThan(0)
+        expect(project.description[locale].length).toBeGreaterThan(0)
+      }
     }
   })
 })
