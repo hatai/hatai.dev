@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { getPost, getPosts, getTranslation, parsePostFile, posts } from './posts'
 
-const SLUG = 'why-i-built-this-site-with-tanstack-solid-start'
+const SLUGS = [
+  'deciding-production-topology-adr-0012',
+  'why-i-built-this-site-with-tanstack-solid-start',
+] as const
+
+const DATES: Record<(typeof SLUGS)[number], string> = {
+  'deciding-production-topology-adr-0012': '2026-11-18',
+  'why-i-built-this-site-with-tanstack-solid-start': '2026-08-24',
+}
 
 describe('blog content', () => {
   it('names the file when YAML frontmatter fails to parse', () => {
@@ -13,31 +21,35 @@ describe('blog content', () => {
     ).toThrow(/invalid YAML frontmatter in bad\.en\.md/)
   })
 
-  it('parses both shipped posts without errors', () => {
-    expect(posts).toHaveLength(2)
+  it('parses all shipped posts without errors', () => {
+    expect(posts).toHaveLength(4)
   })
-  it('exposes exactly one post per language with the expected slug', () => {
-    const en = getPosts('en')
-    const ja = getPosts('ja')
-    expect(en).toHaveLength(1)
-    expect(ja).toHaveLength(1)
-    expect(en[0].slug).toBe(SLUG)
-    expect(ja[0].slug).toBe(SLUG)
-    expect(en[0].lang).toBe('en')
-    expect(ja[0].lang).toBe('ja')
-  })
-
-  it('links the pair as translations in both directions', () => {
-    const en = getPost('en', SLUG)!
-    const ja = getPost('ja', SLUG)!
-    expect(getTranslation(en)).toBe(ja)
-    expect(getTranslation(ja)).toBe(en)
-    expect(en.translationKey).toBe(ja.translationKey)
+  it('exposes the expected slugs per language, newest first', () => {
+    for (const lang of ['en', 'ja'] as const) {
+      const langPosts = getPosts(lang)
+      expect(langPosts).toHaveLength(2)
+      expect(langPosts.map((post) => post.slug)).toEqual([...SLUGS])
+      for (const post of langPosts) {
+        expect(post.lang).toBe(lang)
+      }
+    }
   })
 
-  it('carries the published date', () => {
-    expect(getPost('en', SLUG)!.date).toBe('2026-08-24')
-    expect(getPost('ja', SLUG)!.date).toBe('2026-08-24')
+  it('links each pair as translations in both directions', () => {
+    for (const slug of SLUGS) {
+      const en = getPost('en', slug)!
+      const ja = getPost('ja', slug)!
+      expect(getTranslation(en)).toBe(ja)
+      expect(getTranslation(ja)).toBe(en)
+      expect(en.translationKey).toBe(ja.translationKey)
+    }
+  })
+
+  it('carries the published dates', () => {
+    for (const slug of SLUGS) {
+      expect(getPost('en', slug)!.date).toBe(DATES[slug])
+      expect(getPost('ja', slug)!.date).toBe(DATES[slug])
+    }
   })
 
   it('renders markdown with headings and code blocks', () => {
