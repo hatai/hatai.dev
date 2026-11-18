@@ -39,6 +39,14 @@ const pages = [
     '個人AIエージェントと自宅の開発マシンを MCP でつないだ話',
   ],
   [
+    'blog/dev-environment-muse-t3-mcp/index.html',
+    'class="footnotes"',
+  ],
+  [
+    'ja/blog/dev-environment-muse-t3-mcp/index.html',
+    'class="footnotes"',
+  ],
+  [
     'blog/dev-environment-muse-t3-mcp/architecture.svg',
     '<svg',
   ],

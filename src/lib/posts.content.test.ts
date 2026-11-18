@@ -51,6 +51,15 @@ describe('blog content', () => {
     }
   })
 
+  it('renders footnotes in the dev-environment post', () => {
+    for (const lang of ['en', 'ja'] as const) {
+      const html = getPost(lang, SECOND_SLUG)!.html
+      expect(html).toContain('data-footnote-ref')
+      expect(html).toContain('class="footnotes"')
+      expect(html).toContain('id="footnote-muse"')
+    }
+  })
+
   it('renders code blocks and links in the launch post', () => {
     for (const lang of ['en', 'ja'] as const) {
       const html = getPost(lang, FIRST_SLUG)!.html

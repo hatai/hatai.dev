@@ -1,4 +1,5 @@
-import { parse } from 'marked'
+import { Marked } from 'marked'
+import markedFootnote from 'marked-footnote'
 import { load as loadYaml } from 'js-yaml'
 import type { Locale } from './i18n'
 
@@ -11,6 +12,9 @@ export interface Post {
   date: string
   html: string
 }
+
+const marked = new Marked()
+marked.use(markedFootnote())
 
 const FILE_NAME_RE = /^(.+)\.(en|ja)\.md$/
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
@@ -59,7 +63,7 @@ export function parsePostFile(name: string, source: string): Post {
     title: data.title,
     description: typeof data.description === 'string' ? data.description : '',
     date: data.date,
-    html: parse(sourceMatch[2]) as string,
+    html: marked.parse(sourceMatch[2]) as string,
   }
 }
 

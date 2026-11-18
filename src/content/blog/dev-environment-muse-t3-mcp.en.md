@@ -6,22 +6,15 @@ date: "2026-11-18"
 
 > This article was drafted by an AI and reviewed and edited by the author (a human).
 
-## What appears in this article
-
-- **Muse** — Meta's personal AI agent. It chats with you while also being able to move files and connect to external services on its own. It also handles editing for this blog.
-- **T3 Code** — an open-source app for operating multiple coding agents (Claude Code, Codex, and others) from a single screen. A separate product from T3 Chat.
-- **MCP** — a common standard (Model Context Protocol) for AI to call external tools.
-- **T3 Connect** — T3 Code's relay feature. It securely connects machines in different locations.
-
 ## The problem
 
 When I hand work to a coding agent, more and more of it stalls waiting on my approval. While I'm not looking, the work just sits there. No matter how fast the agent gets, everything stops once the queue of pending decisions jams up.
 
-So I connected [Muse](https://muse.ai), my always-on personal AI agent, to [T3 Code](https://t3.codes) on my home machine. Muse summarizes what needs deciding and brings it to me. All I have to look at is the summary and the decision points. Having things move forward from a third-party point of view was a big help too.
+So I connected [Muse](https://muse.ai)[^muse], my always-on personal AI agent, to [T3 Code](https://t3.codes)[^t3code] on my home machine. Muse summarizes what needs deciding and brings it to me. All I have to look at is the summary and the decision points. Having things move forward from a third-party point of view was a big help too.
 
 ## The setup
 
-Muse lives on a Linux VM. T3 Code runs on WSL Ubuntu inside my home Windows machine. I connected the two over MCP through the T3 Connect relay. Authorization is OAuth, with the scopes orchestration:read and orchestration:operate.
+Muse lives on a Linux VM. T3 Code runs on WSL Ubuntu inside my home Windows machine. I connected the two over MCP[^mcp] through the T3 Connect[^t3connect] relay. Authorization is OAuth, with the scopes orchestration:read and orchestration:operate.
 
 ![Architecture diagram](/blog/dev-environment-muse-t3-mcp/architecture.svg)
 
@@ -56,3 +49,8 @@ It's hard to tell whether things are really moving in the direction I want. I th
 ## How this article was made
 
 This article itself was made like this: Muse picked the theme and interviewed me, a draft was made from my answers, and a T3 Code thread shaped it into the English version and publishable form. At first posts were auto-generated from a brief alone, but the content was thin and the voice wasn't mine. I changed it so interviews are part of the process. This article is the first one produced that way.
+
+[^muse]: Meta's personal AI agent. It chats with you while also being able to move files and connect to external services on its own. It also handles editing for this blog.
+[^t3code]: An open-source app for operating multiple coding agents (Claude Code, Codex, and others) from a single screen. A separate product from T3 Chat.
+[^mcp]: A common standard (Model Context Protocol) for AI to call external tools.
+[^t3connect]: T3 Code's relay feature. It securely connects machines in different locations.

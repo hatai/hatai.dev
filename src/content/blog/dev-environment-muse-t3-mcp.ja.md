@@ -6,22 +6,15 @@ date: "2026-11-18"
 
 > この記事は、AI が下書きを作成し、人間（筆者）が内容の確認と修正を行ったものです。
 
-## この記事に出てくるもの
-
-- **Muse** — Meta の個人 AI エージェント。チャットの相手をしながら、ファイル操作や外部サービスとの連携まで自分で手を動かせる。このブログの編集も担当している。
-- **T3 Code** — 複数の Coding Agent（Claude Code や Codex など）を1つの画面から操作するための、オープンソースのアプリ。T3 Chat とは別製品。
-- **MCP** — AI が外部ツールを呼び出すための共通規格（Model Context Protocol）。
-- **T3 Connect** — T3 Code のリレー機能。離れた場所にあるマシン同士を安全につなぐ。
-
 ## 困っていたこと
 
 Coding Agent に作業を任せると、「私の確認待ち」で止まる場面が増えた。私が見ていない間、作業は止まったままになる。エージェントが速くなっても、判断待ちの列が詰まれば全体は進まない。
 
-そこで、常駐している個人 AI エージェントの [Muse](https://muse.ai) と、自宅マシンの [T3 Code](https://t3.codes) をつないだ。決めるべきことを Muse が要約して持ってくる。私が見るのは要約と判断点だけになる。第3者の視点で物事を進めてくれるのも大きかった。
+そこで、常駐している個人 AI エージェントの [Muse](https://muse.ai)[^muse] と、自宅マシンの [T3 Code](https://t3.codes)[^t3code] をつないだ。決めるべきことを Muse が要約して持ってくる。私が見るのは要約と判断点だけになる。第3者の視点で物事を進めてくれるのも大きかった。
 
 ## 構成
 
-Muse は Linux の VM 上にいる。T3 Code は自宅の Windows マシンの中で、WSL の Ubuntu 上で動いている。この2つを T3 Connect のリレーを経由して MCP でつないだ。認可は OAuth で、スコープは orchestration:read と orchestration:operate。
+Muse は Linux の VM 上にいる。T3 Code は自宅の Windows マシンの中で、WSL の Ubuntu 上で動いている。この2つを T3 Connect[^t3connect] のリレーを経由して MCP[^mcp] でつないだ。認可は OAuth で、スコープは orchestration:read と orchestration:operate。
 
 ![構成図](/blog/dev-environment-muse-t3-mcp/architecture.svg)
 
@@ -56,3 +49,8 @@ Muse は Linux の VM 上にいる。T3 Code は自宅の Windows マシンの�
 ## この記事の作られ方
 
 この記事自体、Muse がテーマを選んで私にインタビューし、その回答をもとに下書きを作り、T3 Code のスレッドが英語版と公開の形を整えた。最初はブリーフだけで自動生成していたが、内容が薄く、文体も私と違った。インタビューを工程に入れる形に変えた。この記事はその最初の1本になる。
+
+[^muse]: Meta の個人 AI エージェント。チャットの相手をしながら、ファイル操作や外部サービスとの連携まで自分で手を動かせる。このブログの編集も担当している。
+[^t3code]: 複数の Coding Agent（Claude Code や Codex など）を1つの画面から操作するための、オープンソースのアプリ。T3 Chat とは別製品。
+[^mcp]: AI が外部ツールを呼び出すための共通規格（Model Context Protocol）。
+[^t3connect]: T3 Code のリレー機能。離れた場所にあるマシン同士を安全につなぐ。
