@@ -24,6 +24,8 @@ The roles are split like this.
 
 While the conductor is stopped by its weekly session limit, Claude takes over; the handoff procedure is canonicalized in the spec and a runbook.
 
+![The exception path when the conductor stops: Claude takes over per the runbook](/img/conductor-failover.en.svg)
+
 A task flows in this order. An issue is filed, and anything splittable is broken into sub-issues. Once I attach ready-for-agent, the conductor dispatches it to a GLM implementation thread, the resulting PR is reviewed by Codex, and whatever passes enters the merge queue and gets merged.
 
 ## Mechanisms That Make It Work
@@ -66,8 +68,14 @@ As countermeasures, I wrote the substitute procedure into a runbook and made the
 
 ## One Artifact from the Flow: ADR 0012
 
-An example of what this flow produces. ADR 0012 fixes the production topology to a single host running Docker Compose, a Caddy reverse proxy, and systemd timers ([PR #429](https://github.com/hatai/Pelway/pull/429)).
+An example of what this flow produces. ADR 0012 fixes the production topology, and it went through this exact path: filed as an issue, labeled ready-for-agent, implemented by GLM (the ADR text plus a structural test that checks existence and link resolution), then reviewed by Codex ([PR #429](https://github.com/hatai/Pelway/pull/429)).
 
-The content splits the networks into edge, app, data, and sandbox, with Postgres unreachable from the sandbox. It went through this flow's exact path: filed as an issue, labeled ready-for-agent, implemented by GLM (the ADR text plus a structural test that checks existence and link resolution), then reviewed by Codex.
+Below is an excerpt of the ADR edited for this post (the original lives at `docs/adr/0012-production-topology-single-host.md`; the full text is reachable from the PR).
+
+> **Background**: an ADR to fix the production placement policy up front. It explicitly scopes out the actual hosting contract, deployment work, and writing the compose files. The reason for this choice was to keep operations simple, and to use a topology where I can see and understand every part myself when something stops.
+>
+> **The decision**: production is a single host. Components are declared with Docker Compose, the only public entry point is a Caddy reverse proxy, and host-level scheduled jobs (backups, health checks, security updates) run on systemd timers. Networks are split into edge, app, data, and sandbox; Postgres sits only on `data` with no `ports`, so no path from a sandbox to the DB exists. Hosting is assumed to be domestic in Japan, with no dependency on cloud-specific services like managed databases or object storage. Host hardening — firewall, SSH lockdown, automatic updates — is managed as scripts and configuration in the repository. Rakazo's self-hosted setup was adopted as the template.
+>
+> **Rejected options and the cost**: Kubernetes was rejected as excessive for the initial scale; migration design will be a separate effort if scale ever demands it. The cost of dropping cloud-specific services is that operational pieces around backups, updates, and monitoring have to be written as compose files and scripts — that work is filed as separate issues.
 
 This flow itself will keep changing, and I will write about it again when it does. If you have questions, feel free to reach me at [me@hatai.dev](mailto:me@hatai.dev).

@@ -29,6 +29,10 @@ const pages = [
     '/img/bottleneck-moves.en.svg',
   ],
   [
+    'blog/building-an-agent-team-development-flow/index.html',
+    '/img/conductor-failover.en.svg',
+  ],
+  [
     'ja/blog/building-an-agent-team-development-flow/index.html',
     'エージェントチームで Pelway を開発するフロー',
   ],
@@ -40,10 +44,16 @@ const pages = [
     'ja/blog/building-an-agent-team-development-flow/index.html',
     '/img/bottleneck-moves.ja.svg',
   ],
+  [
+    'ja/blog/building-an-agent-team-development-flow/index.html',
+    '/img/conductor-failover.ja.svg',
+  ],
   ['img/agent-team-flow.en.svg', '<svg'],
   ['img/agent-team-flow.ja.svg', '<svg'],
   ['img/bottleneck-moves.en.svg', '<svg'],
   ['img/bottleneck-moves.ja.svg', '<svg'],
+  ['img/conductor-failover.en.svg', '<svg'],
+  ['img/conductor-failover.ja.svg', '<svg'],
   [
     'blog/why-i-built-this-site-with-tanstack-solid-start/index.html',
     'Why I Built This Site with TanStack Solid Start',

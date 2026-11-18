@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 130" role="img" aria-label="例外経路: Grok Bot がセッションリミットで停止したら、runbook に沿って Claude が代行する">
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; }
+    .fg { fill: #1c1b18; }
+    .muted { fill: #6f6c66; }
+    .box { fill: #fbfaf8; stroke: #d8d5cd; }
+    .doc { fill: #fbfaf8; stroke: #d8d5cd; stroke-dasharray: 5 4; }
+    .edge { stroke: #b6b2a8; fill: none; }
+    .edgeDash { stroke: #b6b2a8; fill: none; stroke-dasharray: 5 4; }
+    .accent { fill: #9a3412; }
+    .ahead { fill: #b6b2a8; }
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #e9e7e2; }
+      .muted { fill: #a09d95; }
+      .box { fill: #1a1a18; stroke: #3a3935; }
+      .doc { fill: #1a1a18; stroke: #5b5952; }
+      .edge, .edgeDash { stroke: #5b5952; }
+      .accent { fill: #fb923c; }
+      .ahead { fill: #5b5952; }
+    }
+  </style>
+  <defs>
+    <marker id="arr3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" class="ahead"/>
+    </marker>
+  </defs>
+
+  <line x1="230" y1="50" x2="272" y2="50" class="edge" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <line x1="452" y1="50" x2="494" y2="50" class="edge" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <path d="M 560 84 C 430 122 240 122 130 84" class="edgeDash" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <rect x="20" y="22" width="210" height="56" rx="8" class="box"/>
+  <text x="125" y="46" text-anchor="middle" font-size="12" class="fg">Grok Bot が</text>
+  <text x="125" y="63" text-anchor="middle" font-size="12" class="fg">セッションリミットで停止</text>
+
+  <rect x="274" y="22" width="178" height="56" rx="8" class="doc"/>
+  <text x="363" y="46" text-anchor="middle" font-size="12" class="fg">runbook</text>
+  <text x="363" y="63" text-anchor="middle" font-size="10" class="muted">引き継ぎ手順の正本</text>
+
+  <rect x="496" y="22" width="204" height="56" rx="8" class="box"/>
+  <text x="598" y="46" text-anchor="middle" font-size="12" class="fg">Claude が代行</text>
+  <text x="598" y="63" text-anchor="middle" font-size="10" class="muted">バックグラウンドセッション</text>
+
+  <text x="345" y="122" text-anchor="middle" font-size="10" class="muted">復帰時は手順どおり引き継ぎ戻し</text>
+</svg>
