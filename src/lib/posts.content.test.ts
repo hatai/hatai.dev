@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { getPost, getPosts, getTranslation, parsePostFile, posts } from './posts'
 
-const SLUG = 'why-i-built-this-site-with-tanstack-solid-start'
+const FIRST_SLUG = 'why-i-built-this-site-with-tanstack-solid-start'
+const SECOND_SLUG = 'dev-environment-muse-t3-mcp'
 
 describe('blog content', () => {
   it('names the file when YAML frontmatter fails to parse', () => {
@@ -13,31 +14,35 @@ describe('blog content', () => {
     ).toThrow(/invalid YAML frontmatter in bad\.en\.md/)
   })
 
-  it('parses both shipped posts without errors', () => {
-    expect(posts).toHaveLength(2)
+  it('parses all shipped posts without errors', () => {
+    expect(posts).toHaveLength(4)
   })
-  it('exposes exactly one post per language with the expected slug', () => {
+  it('exposes both posts per language, newest first', () => {
     const en = getPosts('en')
     const ja = getPosts('ja')
-    expect(en).toHaveLength(1)
-    expect(ja).toHaveLength(1)
-    expect(en[0].slug).toBe(SLUG)
-    expect(ja[0].slug).toBe(SLUG)
-    expect(en[0].lang).toBe('en')
-    expect(ja[0].lang).toBe('ja')
+    expect(en).toHaveLength(2)
+    expect(ja).toHaveLength(2)
+    expect(en.map((p) => p.slug)).toEqual([SECOND_SLUG, FIRST_SLUG])
+    expect(ja.map((p) => p.slug)).toEqual([SECOND_SLUG, FIRST_SLUG])
+    for (const post of en) expect(post.lang).toBe('en')
+    for (const post of ja) expect(post.lang).toBe('ja')
   })
 
-  it('links the pair as translations in both directions', () => {
-    const en = getPost('en', SLUG)!
-    const ja = getPost('ja', SLUG)!
-    expect(getTranslation(en)).toBe(ja)
-    expect(getTranslation(ja)).toBe(en)
-    expect(en.translationKey).toBe(ja.translationKey)
+  it('links each pair as translations in both directions', () => {
+    for (const slug of [FIRST_SLUG, SECOND_SLUG]) {
+      const en = getPost('en', slug)!
+      const ja = getPost('ja', slug)!
+      expect(getTranslation(en)).toBe(ja)
+      expect(getTranslation(ja)).toBe(en)
+      expect(en.translationKey).toBe(ja.translationKey)
+    }
   })
 
-  it('carries the published date', () => {
-    expect(getPost('en', SLUG)!.date).toBe('2026-08-24')
-    expect(getPost('ja', SLUG)!.date).toBe('2026-08-24')
+  it('carries the published dates', () => {
+    expect(getPost('en', FIRST_SLUG)!.date).toBe('2026-08-24')
+    expect(getPost('ja', FIRST_SLUG)!.date).toBe('2026-08-24')
+    expect(getPost('en', SECOND_SLUG)!.date).toBe('2026-11-18')
+    expect(getPost('ja', SECOND_SLUG)!.date).toBe('2026-11-18')
   })
 
   it('renders markdown with headings and code blocks', () => {
