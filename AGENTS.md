@@ -87,7 +87,78 @@ Verification after changes: `pnpm test` for `src/lib/**`; `pnpm build && pnpm ve
 
 ### Common tasks
 
-- **Add a blog post**: drop `<slug>.<en|ja>.md` into `src/content/blog/` with frontmatter; pair EN/JA via `translationKey` (defaults to slug). Update `posts.content.test.ts` counts/markers and `scripts/verify-build.mjs` needles.
+- **Add a blog post**: drop `<slug>.<en|ja>.md` into `src/content/blog/` with frontmatter; pair EN/JA via `translationKey` (defaults to slug). Update `posts.content.test.ts` counts/markers and `scripts/verify-build.mjs` needles. Authoring rules (style, disclosure, filters, review) live in 「ブログ記事執筆」 below.
 - **Add a route**: create file(s) under `src/routes/` (mirror under `ja/` if localized); never touch `routeTree.gen.ts`.
 - **Add UI strings**: add key to `en` in `src/lib/i18n.ts`, mirror in `ja` (shape-parity test enforces it).
 - **Edit profile data**: edit `src/content/profile.yaml` — every text field needs both `en` and `ja`; quote bare numbers (YAML parses `2020` as int) or `parseProfile` fails the build with a field-path message.
+
+## ブログ記事執筆
+
+このブログの記事を書くエージェント（執筆・査読）への正本ルール。2026-11-18 の運用（PR #6 / PR #7）で得た判断を集約したもの。
+
+### 前提
+
+- 公開は本人のマージでのみ行う。自動マージ・main への直接 push は禁止。
+- 記事は日英ペア（`src/content/blog/<slug>.ja.md` / `.en.md`）。日本語が正本、英語は翻訳で、英語だけに情報を足さない。
+- フロントマターは `title` / `description` / `date` のみ（`translationKey` は省略）。
+
+### 作り方（フロー v3）
+
+1. Muse（編集）が日々の活動からテーマを選び、本人にインタビュー質問（3〜5問、短答可）を出す。
+2. 本人の回答が素材の核。回答がない週は記事を作らない。
+3. 執筆はブリーフ（テーマ、事実、インタビュー素材、アウトライン）に基づいて行う。ブリーフにない事実を推測で作らない。
+4. 査読は執筆と別モデルが行い、事実照合・文体・フィルタを見て最大2往復で直す。
+
+### 文体
+
+- 一人称で書く。書き手は本人として書く。
+- 短い文で切る。説明を盛らない。接続詞でダラダラつながない。
+- AI 定型句を使わない: 「〜が重要です」「大きな一歩です」「まとめると」「革新的な」等。
+- インタビュー素材がある記事では、本人の言い回しをできるだけ残す。
+- 具体的な数字・固有名詞・日付を入れる（「大幅に改善」ではなく実数で）。ただし裏付けの取れない数字は入れない。数字を使うときは出典（何をどう数えたか）を説明できること。
+- 誇張や煽りをしない。失敗や制約、未解決のこともそのまま書く。観測と推測を分ける。
+- 締めは短く。連絡先への誘導は入れても1行まで。
+
+### タイトル
+
+- 知らない読者が止まる固有名詞をタイトルの前面に出さない（例: 製品名・プロジェクト名）。固有名詞は本文の最初で紹介する。
+- 一般名詞で「何の話か」が分かる形にする。
+
+### リンクと番号
+
+- 自分のリポジトリの PR・Issue・コミットへのリンクや番号（#300、PR #155 等）は本文に入れない。出来事は番号なしで伝わるように書く。
+- 読者に意味のある外部の一般公開情報（製品の公式ページ等）へのリンクはよい。
+
+### 専門用語と図
+
+- 専門用語は初出で短く補足する（例: ラベル名だけで済ませず「着手OKの合図（人間が判断）」と書く）。
+- 図は SVG で `public/` 配下の既存の置き方に合わせ、サイトのアクセントカラーに寄せる。
+- フロー図は担当ごとのレーンに分け、実際の段取り（判断ゲート、差し戻しループ、例外経路）が追える粒度にする。大雑把な箱と矢印だけにしない。
+- 図の直下に用語の短い説明（凡例）を置く。
+
+### 開示
+
+- 冒頭（タイトル直下）に AI 開示を引用ブロックで置く。
+  - 基本形: 「この記事は、AI が下書きを作成し、人間（筆者）が内容の確認と修正を行ったものです。」
+  - フロー紹介記事では、そのフローで作られた旨の形にしてよい。EN 版も同趣旨を置く。
+
+### 公開フィルタ
+
+- 仕事の固有名詞・顧客情報・社内システムの詳細は書かない。一般化できる学びだけ残す。
+- 金融・口座・個人の手続きはネタにしない。秘密情報・認証情報・他者の個人情報は含めない。
+- 公開リポジトリのプロジェクト（例: Pelway）の設計判断は書いてよい。
+
+### 技術作法
+
+- ブランチは `blog/<slug>`、PR は main 向け。マージはしない。
+- 提出前に `pnpm test` / `pnpm build` / `pnpm verify` を通し、結果を報告に含める。
+- 既存記事とリポの README（「Writing a blog post」）の作法を優先する。
+
+### 査読チェックリスト
+
+- [ ] 事実（番号・日付・数字）に出典があり、盛られていないか
+- [ ] 本人の声（インタビュー素材）が核になっているか、AI 定型句が残っていないか
+- [ ] 自分のリポの番号・リンクが入っていないか
+- [ ] 専門用語に補足があり、図のラベルが平易か
+- [ ] 開示文が冒頭にあるか
+- [ ] 公開フィルタに触れる内容がないか
