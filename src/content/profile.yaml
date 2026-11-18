@@ -18,19 +18,19 @@ summary:
   ja: ヘルスケアSaaSを中心に、POS、動画配信、予約プラットフォームなど、本番のWebサービスを10年作ってきたフルスタックエンジニア。いまはテックリードとして設計から実装、CI/CDまでを担い、LLMの文書抽出と評価基盤を本番投入した。Claude CodeやCodex、Devinといったコーディングエージェントを毎日使い、複数エージェントを束ねる開発フローの構築にも取り組んでいる。
 highlights:
   en:
-    - Shipped LLM-based document extraction to production at a healthcare SaaS — replaced a legacy OCR pipeline with substantially higher accuracy. FastAPI + LangChain v1/LangGraph multi-agent orchestration with multi-model support (Claude, GPT, Gemini, Mistral), async task-queue workers, and HMAC-signed webhooks on AWS.
-    - 'Built the LLM evaluation stack: golden-dataset experiments on Langfuse (observation/user/session-level scores, trace costs) with dedicated CLI tooling, plus shadow deployments comparing candidate models on live traffic before switching defaults.'
-    - 'Release engineering: rebuilt container CI/CD around a build-once model — prebuilt base images plus an ECR registry cache cut image builds from 17 minutes to under 5; added automated rollback and reusable deploy workflows (QA/staging/prod).'
-    - 'Test infrastructure: led a 9-part RSpec optimization project on a 100k+-commit Rails/Vue monorepo (CircleCI Gen2, test-suite splitting, auto-rerun) — individual suite runtimes cut by up to ~40%.'
-    - Daily production user of Claude Code, Cursor, GitHub Copilot, Codex, and Devin — reviews and corrects AI-generated code as part of normal work; distilled the know-how into agent skills (LangChain, Langfuse, FastAPI, Terraform, optimize-rspec) and custom sub-agents shared across the engineering team.
-    - 'Spec-driven development: write thorough design docs and context so coding agents deliver the intended result on the first pass.'
+    - Shipped LLM document extraction to production at a healthcare SaaS, replacing a legacy OCR pipeline with much higher accuracy. FastAPI + LangChain v1/LangGraph multi-agent setup with switchable models (Claude, GPT, Gemini, Mistral).
+    - 'Built the LLM evaluation stack: a dedicated CLI for golden-dataset experiments on Langfuse (scores, trace costs), and shadow deployments that compared candidate models on live traffic before switching defaults.'
+    - 'Release engineering: rebuilt CI/CD around a build-once model and cut image builds from 17 minutes to under 5. Added automated rollback and reusable deploy workflows for QA/staging/prod.'
+    - 'Test infrastructure: led a 9-part RSpec optimization on a 100k+-commit Rails/Vue monorepo. CircleCI Gen2, test-suite splitting, and auto-rerun cut suite runtimes by up to ~40%.'
+    - Daily production user of Claude Code, Cursor, GitHub Copilot, Codex, and Devin — reviewing and fixing AI-generated code is part of normal work. Packaged the know-how into agent skills (LangChain, Langfuse, FastAPI, Terraform, optimize-rspec) and custom sub-agents for the engineering team.
+    - 'Spec-driven development: write thorough design docs and context first, so coding agents produce the intended result on the first pass.'
   ja:
-    - ヘルスケアSaaSでLLM文書抽出を本番投入 — 既存OCRパイプラインを置き換え、精度を大幅に向上。FastAPI + LangChain v1/LangGraphによるマルチエージェントオーケストレーション、マルチモデル対応(Claude、GPT、Gemini、Mistral)、非同期タスクキューワーカー、HMAC署名付きWebhookをAWS上で設計・運用。
-    - 'LLM評価基盤を構築: Langfuseでのゴールデンデータセット実験(観測/ユーザー/セッション単位のスコア、トレースコスト)と専用CLIツール、デフォルト切替前に実トラフィックで候補モデルを比較するシャドウデプロイを運用。'
-    - 'リリースエンジニアリング: build-onceモデルへのCI/CD再構築。ベースイメージ事前ビルドとECRレジストリキャッシュでイメージビルドを17分→5分未満に短縮し、自動ロールバックとQA/staging/prod共通の再利用可能なデプロイワークフローを整備。'
-    - 'テスト基盤: 10万コミット超のRails/Vueモノリスで9分割のRSpec高速化プロジェクトを主導(CircleCI Gen2、テスト分割、自動リラン)。スイート単位の実行時間を最大約40%短縮。'
-    - Claude Code、Cursor、GitHub Copilot、Codex、Devinを業務で毎日使用し、AI生成コードのレビュー・修正を日常的に実施。ノウハウをエージェントスキル(LangChain、Langfuse、FastAPI、Terraform、optimize-rspec)とカスタムサブエージェントとして整理し、開発チーム全体に展開。
-    - 'スペック駆動開発: 設計ドキュメントとコンテキストを丁寧に整備し、コーディングエージェントが一発で意図した成果物を出すための実践。'
+    - ヘルスケアSaaSでLLM文書抽出を本番投入。既存OCRパイプラインを置き換え、精度を大幅に向上させた。FastAPI + LangChain v1/LangGraphのマルチエージェント構成で、複数モデル(Claude、GPT、Gemini、Mistral)を切り替えられる。
+    - 'LLM評価基盤を構築。Langfuseのゴールデンデータセット実験(スコア・トレースコスト)を回す専用CLIを整備し、デフォルト切替前に候補モデルを実トラフィックで比較するシャドウデプロイを運用した。'
+    - 'リリースエンジニアリング。CI/CDをbuild-onceモデルに作り替え、イメージビルドを17分から5分未満に短縮。自動ロールバックと再利用可能なデプロイワークフロー(QA/staging/prod)も整備した。'
+    - 'テスト基盤。10万コミット超のRails/Vueモノリスで、9分割のRSpec高速化プロジェクトを主導。CircleCI Gen2への移行とテスト分割、自動リランでスイート実行時間を最大約40%短縮した。'
+    - Claude Code、Cursor、GitHub Copilot、Codex、Devinを業務で毎日使い、AI生成コードのレビューと修正を日常業務にしている。ノウハウはエージェントスキル(LangChain、Langfuse、FastAPI、Terraform、optimize-rspec)とカスタムサブエージェントにまとめ、開発チームに展開した。
+    - 'スペック駆動開発。設計ドキュメントとコンテキストを十分に書いてから実装させることで、コーディングエージェントが一度で意図した成果物を出せる状態を作る。'
 skills:
   - category:
       en: AI Tooling
@@ -140,27 +140,31 @@ jobs:
     stack: Vue.js, Ruby on Rails, Python, FastAPI, LangChain/LangGraph, AWS, PostgreSQL
     highlights:
       en:
-        - 4,574 commits / 851 merged PRs across the main SaaS and the AI-OCR platform — one of the primary engineers on the LLM document-recognition service (976 commits / 116 merged PRs).
-        - 'Built the production LLM pipeline (Jan 2025 – Apr 2026): FastAPI + LangChain v1 / LangGraph multi-agent orchestration, multi-model support (Claude, GPT, Gemini, Mistral), structured extraction of exam items/values/units/judgments, async task queue (Taskiq + PostgreSQL), HMAC-signed webhooks, S3/MinIO storage, JWT auth.'
-        - 'Built the LLM evaluation stack: golden-dataset experiments on Langfuse (observation/user/session-level scores, trace costs) with dedicated CLI tooling; shadow deployments comparing candidate models on live traffic before switching defaults.'
-        - 'Led a dedicated AI OCR R&D phase (Oct 2024 – Oct 2025): evaluated models and approaches on real-world documents, then designed and shipped the production pipeline.'
-        - 'Health-checkup features on the main SaaS (300+ commits): LLM-based ingestion of scanned checkup results; designed a configurable rules engine for health conditions (e.g., metabolic syndrome criteria) that later features reused.'
-        - 'Vue 2 → Vue 3 migration: eliminated hundreds of typing errors across shared components, fixtures, and GraphQL codegen layers (single PRs removing 273 / 83 / 42 errors).'
-        - 'PII data masking for staging environments: full masking-policy audit, RFC 2606 reserved domains, credential redaction, outbound-mail suppression.'
-        - 'Release engineering and observability for the OCR service: build-once CI/CD (image builds 17 min → under 5 min), automated rollback workflows, Datadog APM dashboards, and retry instrumentation for queue workers.'
-        - 'Developer platform (2026): led a 9-part RSpec optimization of the Carely monorepo — CircleCI Gen2, test-suite splitting, auto-rerun, suite runtimes down up to ~40%; migrated frontend linting to type-aware oxlint and upgraded Bundler to 4.'
-        - 'Engineering enablement: Claude Code workflows, Agent Skills and custom sub-agents, CLAUDE.md coding rules, Cursor Cloud Agent environments, and CI merge gates — rolled out to the entire engineering team.'
+        - 4,574 commits and 851 merged PRs across the main SaaS and the AI-OCR platform. One of the primary engineers on the LLM document-recognition service, with 976 commits and 116 merged PRs.
+        - 'Built the production LLM pipeline (Jan 2025 – Apr 2026). A FastAPI + LangChain v1/LangGraph multi-agent setup that extracts exam items, values, units, and judgments as structured data. Covers model switching (Claude, GPT, Gemini, Mistral), an async task queue (Taskiq + PostgreSQL), HMAC-signed webhooks, and JWT auth.'
+        - 'Built the LLM evaluation stack. A dedicated CLI runs golden-dataset experiments on Langfuse (observation-, user-, and session-level scores, plus trace costs). Before switching defaults, shadow deployments compared candidate models on live traffic.'
+        - 'Led a dedicated AI-OCR R&D phase (Oct 2024 – Oct 2025): evaluated models and approaches on real documents, then designed and built the production pipeline.'
+        - Health-checkup features on the main SaaS (300+ commits), including LLM-based ingestion of scanned checkup results.
+        - 'Designed a configurable rules engine for health conditions (e.g., metabolic syndrome criteria) that later features reused.'
+        - 'Vue 2 → Vue 3 migration: eliminated hundreds of typing errors across shared components, fixtures, and GraphQL codegen layers (single PRs removing 273, 83, and 42 errors).'
+        - 'PII data masking for staging environments: audited the full masking policy and applied RFC 2606 reserved domains, credential redaction, and outbound-mail suppression.'
+        - 'Release engineering and observability for the OCR service: build-once CI/CD cut image builds from 17 minutes to under 5. Added automated rollback, Datadog APM dashboards, and retry instrumentation for queue workers.'
+        - 'Developer platform (2026): led a 9-part RSpec optimization of the Carely monorepo — CircleCI Gen2, test-suite splitting, and auto-rerun cut suite runtimes by up to ~40%.'
+        - 'Migrated frontend linting to type-aware oxlint and upgraded Bundler to 4.'
+        - 'Engineering enablement: rolled out Claude Code workflows, Agent Skills and custom sub-agents, CLAUDE.md coding rules, Cursor Cloud Agent environments, and CI merge gates to the whole engineering team.'
       ja:
-        - 本体SaaSとAI-OCRプラットフォームで計4,574コミット / マージPR 851本 — LLM文書認識サービスでは主要エンジニアの一人として976コミット / 116本のマージPRを担当。
-        - '本番LLMパイプラインを構築(2025年1月〜2026年4月): FastAPI + LangChain v1 / LangGraphによるマルチエージェントオーケストレーション、マルチモデル対応(Claude、GPT、Gemini、Mistral)、健診項目・値・単位・判定の構造化抽出、非同期タスクキュー(Taskiq + PostgreSQL)、HMAC署名付きWebhook、S3/MinIOストレージ、JWT認証。'
-        - 'LLM評価基盤を構築: Langfuseでのゴールデンデータセット実験(観測/ユーザー/セッション単位のスコア、トレースコスト)と専用CLIツールを整備。デフォルト切替前に実トラフィックで候補モデルを比較するシャドウデプロイを運用。'
-        - AI OCRのR&D専任期間(2024年10月〜2025年10月)を主導。実ドキュメントでモデル・方式を評価し、本番パイプラインを設計・実装。
-        - '本体SaaSの健康診断機能(300+コミット): スキャンされた健診結果をLLMで取り込む機能を実装。健康状態判定の設定可能なルールエンジン(メタボリックシンドローム基準など)を設計し、他機能にも再利用。'
-        - 'Vue 2 → Vue 3移行: 共有コンポーネント、フィクスチャ、GraphQLコード生成層にわたる数百件の型エラーを解消(単一PRで273 / 83 / 42件を削減)。'
-        - 'ステージング環境向けPIIデータマスキング: マスキングポリシー全体の監査、RFC 2606予約ドメイン、認証情報のリダクション、送信メール抑制。'
-        - 'OCRサービスのリリースエンジニアリングとオブザーバビリティ: build-once CI/CD(イメージビルド17分→5分未満)、自動ロールバックワークフロー、Datadog APMダッシュボード、キューワーカーのリトライ計装を整備。'
-        - '開発基盤(2026年): CarelyモノリスのRSpec高速化を9分割で主導 — CircleCI Gen2、テスト分割、自動リランによりスイート実行時間を最大約40%短縮。フロントエンドのlintをtype-awareなoxlintへ移行し、Bundlerを4へアップグレード。'
-        - 'エンジニアリング支援: Claude Codeワークフロー、Agent Skillsとカスタムサブエージェント、CLAUDE.mdコーディングルール、Cursor Cloud Agent環境、CIマージゲートを開発チーム全体に展開。'
+        - 本体SaaSとAI-OCRプラットフォームで計4,574コミット・851本のマージPR。LLM文書認識サービスでは主要エンジニアの一人として976コミット・116本を担当した。
+        - '本番LLMパイプラインを構築した(2025年1月〜2026年4月)。FastAPI + LangChain v1/LangGraphのマルチエージェント構成で、健診項目・値・単位・判定を構造化して抽出。複数モデル(Claude、GPT、Gemini、Mistral)の切り替え、非同期タスクキュー(Taskiq + PostgreSQL)、HMAC署名付きWebhook、JWT認証までを含む。'
+        - 'LLM評価基盤を構築。Langfuseでゴールデンデータセット実験(観測・ユーザー・セッション単位のスコア、トレースコスト)を回す専用CLIを作った。デフォルト切替前は、候補モデルを実トラフィックで比較するシャドウデプロイで判断した。'
+        - AI OCRのR&D専任フェーズ(2024年10月〜2025年10月)を主導。実際のドキュメントでモデルと方式を評価し、その結果を本番パイプラインの設計・実装につなげた。
+        - '本体SaaSの健康診断機能を担当(300+コミット)。スキャンされた健診結果をLLMで取り込む機能を実装した。'
+        - '健康状態を判定する設定可能なルールエンジン(メタボリックシンドローム基準など)を設計。他の機能にも再利用された。'
+        - 'Vue 2からVue 3への移行。共有コンポーネントやフィクスチャ、GraphQLコード生成層にまたがる数百件の型エラーを解消した(単一PRで273件、83件、42件の削減)。'
+        - 'ステージング環境のPIIデータマスキング。マスキングポリシー全体を監査し、RFC 2606の予約ドメイン、認証情報のリダクション、送信メールの抑制を適用した。'
+        - 'OCRサービスのリリースエンジニアリングと監視。build-once CI/CDでイメージビルドを17分から5分未満に短縮し、自動ロールバック、Datadog APMダッシュボード、キューワーカーのリトライ計装を整えた。'
+        - '開発基盤(2026年)。CarelyモノリスのRSpec高速化を9分割のプロジェクトとして主導し、CircleCI Gen2への移行とテスト分割、自動リランでスイート実行時間を最大約40%短縮した。'
+        - 'フロントエンドのlintをtype-awareなoxlintへ移行し、Bundlerを4にアップグレードした。'
+        - 'エンジニアリング支援。Claude Codeワークフロー、Agent Skills、カスタムサブエージェント、CLAUDE.mdのコーディングルール、Cursor Cloud Agent環境、CIマージゲートを開発チーム全体に展開した。'
   - company:
       en: Legalscape (legal-tech SaaS)
       ja: Legalscape(法律テックSaaS)
@@ -176,11 +180,11 @@ jobs:
     stack: Vue.js, React, React Admin, React Router v7, Node.js, Express, TypeORM, Python
     highlights:
       en:
-        - Delivered new features and a frontend redesign while working 24 hrs/week in parallel with full-time employment — a proven part-time remote contractor track record.
-        - 'Full-stack ownership on a 3-person team: frontend and server-side development.'
+        - Delivered new features and a full frontend redesign while working 24 hrs/week alongside full-time employment.
+        - 'Owned frontend and server-side development on a 3-person team.'
       ja:
-        - 正社員業と並行して週24時間で勤務しながら、新機能の提供とフロントエンドの全面リニューアルを完遂 — 副業リモート契約の実績。
-        - '3名チームでフルスタックを担当: フロントエンドおよびサーバーサイド開発。'
+        - 正社員の仕事と並行する週24時間の稼働で、新機能とフロントエンドの全面リニューアルを届けた。
+        - '3名チームでフロントエンドとサーバーサイドの両方を担当した。'
   - company:
       en: FAIR NEXT INNOVATION
       ja: FAIR NEXT INNOVATION
@@ -197,12 +201,12 @@ jobs:
     highlights:
       en:
         - Led 5 web services from inception through design and launch as PL/PM and hands-on engineer on teams of 3–6.
-        - 'Public gym web reservation service (Saga Prefecture): Gatsby + Rails + GCP Cloud Run + Auth0 — designed the entire admin UI/UX myself where no designer was assigned.'
-        - Real-time video streaming service (Next.js + Kotlin/Ktor); web gacha and web voting services (Next.js + Rails); contact-center internal chat tool (Next.js + Twilio) shipped on a tight schedule with zero critical bugs.
+        - 'Public gym web reservation service (Saga Prefecture; Gatsby + Rails + GCP Cloud Run + Auth0). With no designer assigned, I designed the admin UI/UX myself.'
+        - 'Shipped a real-time video streaming service (Next.js + Kotlin/Ktor), web gacha and voting services (Next.js + Rails), and a contact-center chat tool (Next.js + Twilio) on a tight schedule, with zero critical bugs.'
       ja:
-        - PL/PM兼実装エンジニアとして、3〜6名のチームで5つのWebサービスを0→1で立ち上げ。
-        - '公共体育館Web予約サービス(佐賀県): Gatsby + Rails + GCP Cloud Run + Auth0。デザイナー不在の中、管理画面のUI/UXを自身で設計。'
-        - リアルタイム動画配信サービス(Next.js + Kotlin/Ktor)、Webガチャ・Web投票(Next.js + Rails)、コンタクトセンター向けチャットツール(Next.js + Twilio)を短期間でリリースし、重大バグゼロ。
+        - PL/PM兼実装エンジニアとして、3〜6名のチームで5つのWebサービスを立ち上げから設計、リリースまで担当した。
+        - '公共の体育館予約サービス(佐賀県。Gatsby + Rails + GCP Cloud Run + Auth0)。デザイナーがいなかったため、管理画面のUI/UXも自分で設計した。'
+        - リアルタイム動画配信(Next.js + Kotlin/Ktor)、WebガチャとWeb投票(Next.js + Rails)、コンタクトセンター向けチャットツール(Next.js + Twilio)を短期スケジュールでリリース。重大なバグは出なかった。
   - company:
       en: Silicon Studio
       ja: シリコンスタジオ
@@ -219,10 +223,10 @@ jobs:
     highlights:
       en:
         - Built a digital dashboard mock tool (Qt) used to prototype next-generation vehicle instrument clusters for a major automaker.
-        - 'Improved driving-simulator graphics: reflected vehicle telemetry (speed, steering angle) in real-time scenes rendered by the in-house engine.'
+        - 'Improved driving-simulator graphics by reflecting vehicle telemetry (speed, steering angle) in the in-house engine''s real-time scenes.'
       ja:
-        - 大手自動車メーカーの次世代車載メーターのプロトタイプに使用されるデジタルダッシュボードモックツール(Qt)を構築。
-        - 'ドライビングシミュレータのグラフィックを改善: 内製レンダリングエンジンのリアルタイムシーンに車両テレメトリ(速度・操舵角)を反映。'
+        - 大手自動車メーカーの次世代車載メーターのプロトタイピングに使われた、デジタルダッシュボードのモックツール(Qt)を開発した。
+        - 'ドライビングシミュレータの描画を改善。内製レンダリングエンジンのリアルタイムシーンに、車両テレメトリ(速度・操舵角)を反映させた。'
   - company:
       en: Network21 / Digital Hearts
       ja: Network21 / デジタルハーツ
@@ -238,21 +242,21 @@ jobs:
     stack: Java, Spring, Objective-C, Python, Scrapy, Selenium
     highlights:
       en:
-        - 'Developed an iPad/iPhone POS register application: Java/Spring backend + Objective-C iOS app.'
+        - 'Developed an iPad/iPhone POS register app: Java/Spring backend and an Objective-C iOS app.'
         - As main programmer, built a web scraping tool that detects cross-site-request vulnerabilities — launched as a new business line with significant early revenue.
-        - Continuously developed test automation (Java/Selenium) on a 5-person team for Digital Hearts, the group's parent test-services company (2017–2018).
+        - 'Developed test automation (Java/Selenium) on a 5-person team at Digital Hearts, the group''s test-services parent company (2017–2018).'
       ja:
-        - 'iPad/iPhone向けPOSレジアプリケーションを開発: Java/Springサーバーサイド + Objective-C iOSアプリ。'
-        - メインプログラマとして、クロスサイトリクエスト脆弱性を検出するWebスクレイピングツールを構築 — 新規事業として立ち上げ、初期の大きな収益を創出。
-        - グループの親会社でテストサービス企業のデジタルハーツにて、テスト自動化(Java/Selenium)の開発を5名チームで随時担当(2017〜2018年)。
+        - 'iPad/iPhone向けPOSレジアプリを開発。Java/SpringのサーバーサイドとObjective-CのiOSアプリを担当した。'
+        - メインプログラマとして、クロスサイトリクエスト脆弱性を検出するWebスクレイピングツールを構築。新規事業として立ち上がり、初期から大きな収益を上げた。
+        - 'グループ親会社のデジタルハーツ(テストサービス企業)で、5名チームの一員としてテスト自動化(Java/Selenium)を開発した(2017〜2018年)。'
 projects:
   - name: gitz
     tagline:
       en: A terminal git TUI in Zig, aiming for JetBrains-grade interaction
       ja: JetBrains相当の操作感を目指す、Zig製ターミナルgit TUI
     description:
-      en: A commit-focused git TUI with a three-pane Changes/Diff/Commit flow, plus a log-view context menu for revert, cherry-pick, reset, tag, branch, and compare operations. 380+ commits of active solo development.
-      ja: Changes/Diff/Commitの3ペインでステージング・差分閲覧・コミットを行うgit TUI。ログビューのコンテキストメニューからrevert・cherry-pick・reset・tag・branch・compare操作にも対応。380以上のコミットで個人開発を継続中。
+      en: A commit-focused git TUI built around a three-pane Changes/Diff/Commit flow. The log-view context menu covers revert, cherry-pick, reset, tag, branch, and compare. 380+ commits of ongoing solo development.
+      ja: Changes/Diff/Commitの3ペインで構成されるgit TUI。ログビューのコンテキストメニューからrevert、cherry-pick、reset、tag、branch、compareを操作できる。380以上のコミットを重ねて個人開発中。
     url: https://github.com/hatai/gitz
     stack: Zig 0.16 · zigzag
   - name: Mortgage Loan Simulator
@@ -260,8 +264,8 @@ projects:
       en: 'Japan-market mortgage simulator: variable-rate scenarios and the 2026 tax-deduction rules'
       ja: 変動金利シナリオと2026年版住宅ローン減税に対応した日本向けローンシミュレーター
     description:
-      en: Simulates variable-rate repayment scenarios, the 2026 mortgage-interest tax deduction, and early-repayment planning for the Japanese market. TanStack Start + React 19, Tailwind v4, shadcn/ui, Recharts, Zod, TanStack Form, Cloudflare Workers.
-      ja: 変動金利の返済シミュレーション、2026年版住宅ローン控除、繰上返済計画に対応。TanStack Start + React 19、Tailwind v4、shadcn/ui、Recharts、Zod、TanStack Form、Cloudflare Workersで構築。
+      en: Simulates variable-rate repayment scenarios, the 2026 mortgage-interest tax deduction, and early-repayment planning for the Japanese market. Built with TanStack Start + React 19, Tailwind v4, shadcn/ui, Recharts, Zod, TanStack Form, and Cloudflare Workers.
+      ja: 変動金利の返済シミュレーション、2026年版住宅ローン控除、繰上返済計画に対応した日本向けツール。TanStack Start + React 19、Tailwind v4、shadcn/ui、Recharts、Zod、TanStack Form、Cloudflare Workersで構築。
     url: https://github.com/hatai/mortgage-loan-simulator
     stack: TanStack Start · React 19 · Cloudflare Workers
   - name: Veritra
@@ -269,8 +273,8 @@ projects:
       en: Generates test cases from requirements and viewpoints
       ja: 要件・観点からテストケースを生成するテスト設計ツール
     description:
-      en: A test-design web app that generates test cases from requirements and analysis viewpoints — viewpoints defined per feature become reusable test-design assets. Node.js 22 / pnpm / libSQL / Cloudflare Workers, with a test suite and CI lint.
-      ja: 要件と分析観点からテストケースを生成するテスト設計Webアプリ。機能ごとに定義した観点が再利用可能なテスト設計資産になる。Node.js 22 / pnpm / libSQL / Cloudflare Workers。テストスイートとCI lintを備える。
+      en: A test-design web app that generates test cases from requirements and analysis viewpoints — viewpoints defined per feature become reusable design assets. Built on Node.js 22, pnpm, libSQL, and Cloudflare Workers, with a test suite and CI lint.
+      ja: 要件と分析観点からテストケースを生成するテスト設計Webアプリ。機能ごとに定義した観点は、再利用できるテスト設計資産になる。Node.js 22、pnpm、libSQL、Cloudflare Workersで構築し、テストスイートとCI lintを備える。
     url: https://github.com/hatai/veritra
     stack: Node.js 22 · libSQL · Cloudflare Workers
   - name: jobcan-chrome-ext
@@ -278,8 +282,8 @@ projects:
       en: Chrome extension improving a time-tracking system's UX
       ja: 勤怠システムのUXを改善するChrome拡張
     description:
-      en: 'Chrome extension improving the UX of a time-tracking system''s work-hour entry screen: reload prevention, month persistence, and continuous batch input.'
-      ja: 勤怠管理システムの工数入力画面のUXを改善するChrome拡張。リロード防止、月次の状態維持、連続入力に対応。
+      en: 'A Chrome extension that improves a time-tracking system''s work-hour entry screen: reload prevention, month persistence, and continuous batch input.'
+      ja: 勤怠管理システムの工数入力画面のUXを改善するChrome拡張。リロード防止、月次の状態維持、連続した一括入力に対応する。
     url: https://github.com/hatai/jobcan-chrome-ext
     stack: Chrome Extension
   - name: codex-plugin-cc
@@ -287,8 +291,8 @@ projects:
       en: Call Codex from Claude Code for code review and task delegation
       ja: Claude CodeからCodexを呼び出してコードレビュー・タスク委譲
     description:
-      en: 'Fork/customization of AI-agent tooling: invoke Codex from Claude Code to review code or delegate tasks — a second-opinion reviewer inside the coding-agent workflow.'
-      ja: 'AIエージェントツールのフォーク・カスタマイズ: Claude CodeからCodexを呼び出し、コードレビューやタスク委譲を行う。コーディングエージェントのワークフロー内で第二意見レビュアーを動かす。'
+      en: 'A fork of AI-agent tooling: call Codex from Claude Code to review code or delegate tasks — a second-opinion reviewer inside the coding-agent workflow.'
+      ja: 'AIエージェントツールのフォークとカスタマイズ。Claude CodeからCodexを呼び出してコードレビューやタスク委譲を行い、エージェントのワークフロー内でセカンドオピニオンとして働かせる。'
     url: https://github.com/hatai/codex-plugin-cc
     stack: Claude Code · Codex
   - name: cline-kanban
@@ -296,7 +300,7 @@ projects:
       en: Run multiple CLI coding agents in parallel from a local web app
       ja: ローカルWebアプリから複数のCLIコーディングエージェントを並列実行
     description:
-      en: 'Fork/customization of AI-agent tooling: launch a local kanban web app and run CLI coding agents in parallel — orchestrating multiple agents across tasks.'
-      ja: 'AIエージェントツールのフォーク・カスタマイズ: ローカルのかんばんWebアプリを起動し、CLIコーディングエージェントを並列実行。複数エージェントをタスク横断で編成する。'
+      en: 'A fork of AI-agent tooling: a local kanban web app that runs multiple CLI coding agents in parallel, orchestrating agents across tasks.'
+      ja: 'AIエージェントツールのフォークとカスタマイズ。ローカルのかんばんWebアプリからCLIコーディングエージェントを並列で動かし、複数エージェントをタスク横断で編成する。'
     url: https://github.com/hatai/cline-kanban
     stack: CLI coding agents · Web
