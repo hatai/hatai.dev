@@ -6,6 +6,13 @@ date: "2026-11-18"
 
 > This article was drafted by an AI and reviewed and edited by the author (a human).
 
+## What appears in this article
+
+- **Muse** — Meta's personal AI agent. It chats with you while also being able to move files and connect to external services on its own. It also handles editing for this blog.
+- **T3 Code** — an open-source app for operating multiple coding agents (Claude Code, Codex, and others) from a single screen. A separate product from T3 Chat.
+- **MCP** — a common standard (Model Context Protocol) for AI to call external tools.
+- **T3 Connect** — T3 Code's relay feature. It securely connects machines in different locations.
+
 ## The problem
 
 When I hand work to a coding agent, more and more of it stalls waiting on my approval. While I'm not looking, the work just sits there. No matter how fast the agent gets, everything stops once the queue of pending decisions jams up.
