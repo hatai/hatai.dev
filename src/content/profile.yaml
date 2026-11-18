@@ -14,8 +14,8 @@ availability:
   en: Available 20–30 hrs/week as an independent contractor · Remote · Japan (JST)
   ja: 独立契約(業務委託)で週20〜30時間対応可能 · リモート · 日本(JST)
 summary:
-  en: 'Full-stack software engineer with 10 years of experience building production web services end-to-end — POS systems, real-time video streaming, reservation platforms, and healthcare SaaS. AI-native: uses Claude Code, Cursor, GitHub Copilot, Codex, and Devin daily in production work, and shipped an OCR→LLM document-extraction migration together with its Langfuse-based evaluation stack. Tech lead (PL/PM) and hands-on engineer on teams of 3–6.'
-  ja: POSシステム、リアルタイム動画配信、予約プラットフォーム、ヘルスケアSaaSなど、プロダクションのWebサービスをEnd-to-Endで構築してきたフルスタックエンジニア(経験10年)。Claude Code、Cursor、GitHub Copilot、Codex、Devinを毎日業務で使うAIネイティブな開発者。OCR→LLMへの文書抽出移行と、Langfuseによる評価基盤を本番投入した。3〜6名チームでテックリード(PL/PM)と実装を兼任。
+  en: 'Full-stack engineer who has spent 10 years building production web services, centered on healthcare SaaS — including POS, video streaming, and reservation platforms. Now a tech lead covering everything from design and implementation to CI/CD, and shipped LLM document extraction together with its evaluation stack to production. Uses coding agents such as Claude Code, Codex, and Devin every day, and is also working on development workflows that orchestrate multiple agents.'
+  ja: ヘルスケアSaaSを中心に、POS、動画配信、予約プラットフォームなど、本番のWebサービスを10年作ってきたフルスタックエンジニア。いまはテックリードとして設計から実装、CI/CDまでを担い、LLMの文書抽出と評価基盤を本番投入した。Claude CodeやCodex、Devinといったコーディングエージェントを毎日使い、複数エージェントを束ねる開発フローの構築にも取り組んでいる。
 highlights:
   en:
     - Shipped LLM-based document extraction to production at a healthcare SaaS — replaced a legacy OCR pipeline with substantially higher accuracy. FastAPI + LangChain v1/LangGraph multi-agent orchestration with multi-model support (Claude, GPT, Gemini, Mistral), async task-queue workers, and HMAC-signed webhooks on AWS.
