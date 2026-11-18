@@ -28,7 +28,7 @@ const pages = [
   ],
   [
     'ja/blog/index.html',
-    '個人AIエージェントと自宅の開発マシンをMCPでつないだ話',
+    '個人AIエージェントと自宅の開発マシンを MCP でつないだ話',
   ],
   [
     'blog/dev-environment-muse-t3-mcp/index.html',
@@ -36,7 +36,7 @@ const pages = [
   ],
   [
     'ja/blog/dev-environment-muse-t3-mcp/index.html',
-    '個人AIエージェントと自宅の開発マシンをMCPでつないだ話',
+    '個人AIエージェントと自宅の開発マシンを MCP でつないだ話',
   ],
   [
     'blog/dev-environment-muse-t3-mcp/architecture.svg',

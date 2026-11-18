@@ -45,12 +45,18 @@ describe('blog content', () => {
     expect(getPost('ja', SECOND_SLUG)!.date).toBe('2026-11-18')
   })
 
-  it('renders markdown with headings and code blocks', () => {
+  it('renders markdown with headings in every post', () => {
     for (const post of posts) {
       expect(post.html).toContain('<h2')
-      expect(post.html).toContain('<code')
-      expect(post.html).toContain('<pre>')
-      expect(post.html).toContain('<a href="mailto:me@hatai.dev">')
+    }
+  })
+
+  it('renders code blocks and links in the launch post', () => {
+    for (const lang of ['en', 'ja'] as const) {
+      const html = getPost(lang, FIRST_SLUG)!.html
+      expect(html).toContain('<code')
+      expect(html).toContain('<pre>')
+      expect(html).toContain('<a href="mailto:me@hatai.dev">')
     }
   })
 })

@@ -1,83 +1,51 @@
 ---
-title: Connecting a Personal AI Agent to My Home Dev Machine over MCP
-description: Wiring Muse, a personal AI agent on a Linux VM, to T3 Code on my home Windows/WSL machine via MCP. First post in a series on my dev environment.
-date: 2026-11-18
+title: "Connecting a Personal AI Agent to My Home Dev Machine over MCP"
+description: "To solve work stalling while it waited on my approval, I connected Muse, an always-on personal AI agent, to T3 Code on my home machine over MCP. The setup, what worked, and what still has me stuck."
+date: "2026-11-18"
 ---
 
 > This article was drafted by an AI and reviewed and edited by the author (a human).
 
-Over the next few posts, I'm going to write about my development environment itself. First up: how I wired my AI agents together.
+## The problem
 
-There are two of them. Muse, a personal agent, runs all the time on a Linux VM. T3 Code, a coding agent platform, runs on the WSL (Ubuntu) of my home Windows machine. I connected the two over MCP (Model Context Protocol).
+When I hand work to a coding agent, more and more of it stalls waiting on my approval. While I'm not looking, the work just sits there. No matter how fast the agent gets, everything stops once the queue of pending decisions jams up.
 
-## Overview
+So I connected Muse, my always-on personal AI agent, to T3 Code on my home machine. Muse summarizes what needs deciding and brings it to me. All I have to look at is the summary and the decision points. Having things move forward from a third-party point of view was a big help too.
 
-![Architecture diagram connecting Muse, the T3 Connect relay, T3 Code on the home machine, and Grok Bot](/blog/dev-environment-muse-t3-mcp/architecture.svg)
+## The setup
 
-I hand Muse a topic and direction. It connects to T3 on the home machine through the MCP endpoint exposed by the T3 Connect relay, launches a thread on the hatai.dev project, and sends it instructions. The thread writes code in a worktree and opens a PR on GitHub. The dashed Grok Bot route at the bottom of the diagram is still being set up; more on that below.
+Muse lives on a Linux VM. T3 Code runs on WSL Ubuntu inside my home Windows machine. I connected the two over MCP through the T3 Connect relay. Authorization is OAuth, with the scopes orchestration:read and orchestration:operate.
 
-## Why I connected them
+![Architecture diagram](/blog/dev-environment-muse-t3-mcp/architecture.svg)
 
-A coding agent's work stalls waiting on my approval. As long as I can't check, it just sits there. I wanted to fix that.
-
-Having Muse summarize what needs deciding makes things a lot clearer. And being able to push things forward from a third-party point of view is nice.
-
-I also wanted code and credentials to stay on my own machine. GitHub tokens, SSH keys, and the repositories themselves all live on the home WSL. Muse on the VM gets no direct access to the code; it only operates through the T3 API. Muse is the editor, and the T3 threads do the implementation.
-
-## How the connection works
-
-The connection goes through the MCP endpoint that the T3 Connect relay exposes. Authorization is OAuth, and the only scopes I issue are `orchestration:read` and `orchestration:operate`.
-
-The connector on the Muse side is self-built. Instead of passing through every tool T3 exposes, it filters them through a per-tool allow-list.
-
-| Group | Permitted operations |
-| --- | --- |
-| Read-only | Reading environments, projects, and threads |
-| Operable | `t3_thread_launch` (start a thread), `t3_thread_send` (send instructions to a thread) |
-| Off the list | `t3_project_create` (project creation) |
-
-Thread launching and instruction sending are permitted for Muse, and this blog's drafting and revision runs on exactly those two tools. Only project creation stays off the list; I add projects myself in the T3 app. Extending the allow-list is a manual step, so permissions can't quietly grow.
+The connection goes through a self-built connector with a per-tool allow-list. Read-only tools, plus operational ones like launching threads and sending instructions, are allowed. Project creation stays off the list; that's something I do myself in the T3 app. I wanted to keep the operations I hand to agents narrow from the start.
 
 ## What changed
 
 I give coding agents direct instructions far less often now.
 
-The setup works like this: a conductor coding agent hands work down to worker coding agents, and it's doing well. The conductor talking with Muse and Grok Bot produces third-party opinions, decisions, and improvement proposals.
+Right now I run a conductor coding agent that hands work down to worker coding agents. The conductor talks with Muse, which brings out third-party opinions, decisions, and improvement proposals.
 
-The improvement loop might be the biggest win. Without me giving detailed instructions, proposals, implementations, and applications just keep moving on their own.
+The improvement loop is the biggest win, I think. Even without detailed instructions from me, proposals, implementations, and applications keep moving on their own. This blog post becoming a PR today happened inside that flow.
 
-Another post on this blog was written through this setup. Muse launched a thread on the hatai.dev project with `t3_thread_launch` and drove it through draft, revision, and PR creation with `t3_thread_send`. This article went through the same pipeline. Muse launched its writing thread too.
+## I want to connect Grok Bot too
 
-## Connecting Grok Bot
+The conductor role was Grok Bot's job from the start. But Grok bots have no public API and no webhooks. The only thing reachable from the outside is the direction where the bot itself calls out to an MCP server.
 
-There's one more peer I want to connect: a Grok bot. The reason is insurance. When one side hits a rate limit and stalls, work can shift to the other. And decisions one side made while the other was down get easier to hand over.
+So I decided to set up a shared message board. I built an MCP server myself and verified posting and reading locally. The goal is insurance. When one side stalls on a usage limit, I want the decisions the other side made while it was down to be picked up afterward.
 
-The problem: Grok bots have no public API and no webhooks. There's no way to call one from the outside. The only open direction is the bot itself calling out to an MCP server.
+It's not connected end to end yet, though. Muse's VM can't accept inbound connections (its Tailscale client is outbound-only), so the board's public host has to be the home machine. That part is still in progress.
 
-So I built Agent Intercom, a shared MCP message board where agents can leave notes for each other.
+## When it goes down
 
-```text
-tools: post / read
-auth:  Bearer token
-deps:  standard library only
-```
+Everything is implemented locally. If the machine goes down, everything stops. It actually did: the other day my home PC crashed, the T3 relay started returning HTTP 530, and the whole thing stopped.
 
-Connectivity is verified locally. The blocker is where to host it. The Tailscale client on Muse's VM is outbound-only, so the VM can't accept inbound connections. The board's public host ends up being the home machine, exposed through Tailscale Funnel. That's still in progress, and Grok Bot and Muse aren't connected end to end yet.
+But when T3 comes back, it automatically sends a "resume" message to the threads that were mid-work. The way it picks back up where it left off after a crash is better than I expected.
 
-## Gripes and worries
+## What I still don't know
 
-Everything runs locally, so if the machine goes down, everything stops. It did go down. The day my home PC crashed, the T3 relay started returning HTTP 530 and the whole thing stopped. A reboot fixed it, but it made the single point of failure very real. SSH is a separate path from T3, but that crash happened right at a reboot and sshd wasn't up yet, so for a while I couldn't get in through either route.
+It's hard to tell whether things are really moving in the direction I want. I think the same is true with humans. Still, given how fully I'm leaning on AI bots, there should be a way to visualize it that fits. What the best way is, I haven't figured out yet.
 
-That said, when T3 goes down it automatically sends a "resume" message to the in-progress threads. That part is nice.
+## How this article was made
 
-One more thing: it's hard to tell whether the work is actually heading where I want it to. The same is true with humans, to be fair. I do think there's a way to visualize it that only exists because I'm running AI bots everywhere. I just haven't figured out what the best way is yet.
-
-## Closing
-
-The home machine is the hub now, with the agents connected over MCP. Still under construction.
-
-How this article got made is part of the environment too. Muse picked the theme, interviewed me about why I connected them, what changed, and what's bothering me, and a T3 writing thread wrote it up from my answers. At first I had posts auto-generated from a brief alone, and the first draft came out thin and didn't sound like me. So I changed the generation pipeline itself, adding an interview step between topic-finding and writing. The plan is to run the "find topic, interview, write" loop weekly from here.
-
-Even when agents do the writing, you still need a step that puts the human's judgment and voice back in. This one article made that clear.
-
-Next time I'll dig into the connector and where the board ends up living. Reach me at [me@hatai.dev](mailto:me@hatai.dev).
+This article itself was made like this: Muse picked the theme and interviewed me, a draft was made from my answers, and a T3 thread shaped it into the English version and publishable form. At first posts were auto-generated from a brief alone, but the content was thin and the voice wasn't mine. I changed it so interviews are part of the process. This article is the first one produced that way.
