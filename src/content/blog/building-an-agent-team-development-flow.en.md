@@ -26,6 +26,8 @@ The roles are split like this.
 | Merge | Kodiak (a hosted merge-queue tool) | Take in PRs that pass |
 | Judgment | Human (me) | Only three things: attach ready-for-agent, merge, decide direction |
 
+This table is a simplification of the main roles, and the roster has already changed: a few days in, Devin CLI was added to implementation and review.
+
 While the conductor is stopped by its weekly session limit, Claude takes over; the handoff procedure is canonicalized in the spec and a runbook.
 
 ![The exception path when the conductor stops: Claude takes over per the runbook](/img/conductor-failover.en.svg)
@@ -57,7 +59,7 @@ With this memo, the conductor can issue the next instruction without holding the
 
 ## Benefits and Friction (Observed)
 
-Only things that actually happened, not predictions.
+Only things that actually happened, not predictions. In raw numbers: from the repository's start to the writing of this post — about ten days — 256 issues were filed and 195 PRs were merged (counted on GitHub on 2026-11-18). Since the flow itself was being assembled during the same period, not all 195 went through the flow in its current form.
 
 | Aspect | Benefit | Downside / friction |
 | --- | --- | --- |
@@ -66,15 +68,26 @@ Only things that actually happened, not predictions.
 | Division of labor | Work splits by model strength (GLM implements, Codex reviews, Claude gives second opinions) | Several subscription usage limits have to be managed at once |
 | Human load | I only have to focus on the decision points | The conductor is a single point of failure and stops at its session limit |
 
-As countermeasures, I wrote the substitute procedure into a runbook and made the merge queue independent of the GLM implementation slots. But a documented procedure does not guarantee mutual exclusion — the primary and the substitute actually reviewed the same pull request at the same time. The congestion only relocated, the rate limit itself remains, and the constant effort of writing canonical docs is honestly heavy.
+As countermeasures, I wrote the substitute procedure into a runbook and made the merge queue independent of the GLM implementation slots. Failures still happen.
+
+One concrete case: a pull request received two approval reviews five minutes apart — a double command. The instruction the primary issued right before stopping, and the one the substitute issued right after taking over, pointed at the same target. It doubled the review effort and left it ambiguous which verdict counted. In response, the runbook now spells out the takeover triggers (the primary has reported no activity for a set period, or has recorded itself as blocked) and the handoff order (reconcile the actual GitHub state against the auxiliary records before acting), plus the principle that the substitute must not create state only it knows about. When the primary returns, it reads the substitute's worklog and continues from the GitHub state.
+
+Delegation is not a rare exception: the worklogs record six substitute runs over five days of this period, so the conductor stops somewhere almost every day. The congestion only relocated, the rate limit itself remains, and the constant effort of writing canonical docs is honestly heavy. A misreading of a usage limit also once caused the implementation slot count to be lowered and reverted on the same day.
 
 ![The rate limit moving from implementation to review to the merge queue](/img/bottleneck-moves.en.svg)
 
-## One Artifact from the Flow: ADR 0012
+## Case Study: One Task's Path Through the Flow
 
-An example of what this flow produces. ADR 0012 fixes the production topology, and it went through this exact path: filed as an issue, labeled ready-for-agent, implemented by GLM (the ADR text plus a structural test that checks existence and link resolution), then reviewed by Codex.
+As a concrete example, here is the timeline of the task that fixed the production topology in an ADR (issue and PR numbers omitted, but the order and content follow the actual records).
 
-Below is an excerpt of the ADR edited for this post (the original lives at `docs/adr/0012-production-topology-single-host.md` in the public Pelway repository).
+1. An issue was filed to decide the production placement template as an ADR, and a human attached `ready-for-agent`. Several days passed between filing and the implementation thread opening a draft PR.
+2. A GLM implementation thread wrote the ADR text and a structural test that checks its existence and link resolution in a worktree, then opened a draft PR.
+3. The reviewer (Devin CLI, in this case) sent it back twice. First: the sandbox controller's placement contradicted the canonical technical spec that defines how the runner sends launch requests. Second: the placement had no path from a task sandbox to the integration gateway at all. Both were design inconsistencies in the document, not style issues. Review results state the assignee, model, and effort — across the rounds, effort was raised medium → high → max.
+4. The implementation thread fixed the findings and re-delegated; the third review approved, and once required checks passed the merge queue merged it. About 90 minutes from draft PR to merge.
+
+The rule is that this loop stays closed between the implementation thread and the reviewer, so neither the conductor nor I intervened during those 90 minutes.
+
+Below is an excerpt of that ADR edited for this post (the original lives at `docs/adr/0012-production-topology-single-host.md` in the public Pelway repository).
 
 > **Background**: an ADR to fix the production placement policy up front. It explicitly scopes out the actual hosting contract, deployment work, and writing the compose files. The reason for this choice was to keep operations simple, and to use a topology where I can see and understand every part myself when something stops.
 >
