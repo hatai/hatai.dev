@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 140" role="img" aria-label="タスクの流れ: Issue、ready-for-agent、実装、レビュー、マージキュー、マージ。担当は順に Grok Bot、人間、GLM、Codex と Claude、Kodiak、人間">
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; }
+    .fg { fill: #1c1b18; }
+    .muted { fill: #6f6c66; }
+    .box { fill: #fbfaf8; stroke: #d8d5cd; }
+    .edge { stroke: #b6b2a8; fill: none; }
+    .accent { fill: #9a3412; }
+    .ahead { fill: #9a3412; }
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #e9e7e2; }
+      .muted { fill: #a09d95; }
+      .box { fill: #1a1a18; stroke: #3a3935; }
+      .edge { stroke: #5b5952; }
+      .accent, .ahead { fill: #fb923c; }
+    }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" class="ahead"/>
+    </marker>
+  </defs>
+
+  <line x1="110" y1="37" x2="126" y2="37" class="edge" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="228" y1="37" x2="244" y2="37" class="edge" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="346" y1="37" x2="362" y2="37" class="edge" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="464" y1="37" x2="480" y2="37" class="edge" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="582" y1="37" x2="598" y2="37" class="edge" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="10" y="14" width="100" height="46" rx="8" class="box"/>
+  <rect x="128" y="14" width="100" height="46" rx="8" class="box"/>
+  <rect x="246" y="14" width="100" height="46" rx="8" class="box"/>
+  <rect x="364" y="14" width="100" height="46" rx="8" class="box"/>
+  <rect x="482" y="14" width="100" height="46" rx="8" class="box"/>
+  <rect x="600" y="14" width="100" height="46" rx="8" class="box"/>
+
+  <text x="60" y="42" text-anchor="middle" font-size="13" class="fg">Issue</text>
+  <text x="178" y="42" text-anchor="middle" font-size="10" class="fg">ready-for-agent</text>
+  <text x="296" y="42" text-anchor="middle" font-size="13" class="fg">実装</text>
+  <text x="414" y="42" text-anchor="middle" font-size="13" class="fg">レビュー</text>
+  <text x="532" y="42" text-anchor="middle" font-size="11" class="fg">マージキュー</text>
+  <text x="650" y="42" text-anchor="middle" font-size="13" class="fg">マージ</text>
+
+  <text x="60" y="80" text-anchor="middle" font-size="11" class="muted">Grok Bot</text>
+  <text x="178" y="80" text-anchor="middle" font-size="11" font-weight="600" class="accent">人間</text>
+  <text x="296" y="80" text-anchor="middle" font-size="11" class="muted">GLM</text>
+  <text x="414" y="80" text-anchor="middle" font-size="10" class="muted">Codex + Claude</text>
+  <text x="532" y="80" text-anchor="middle" font-size="11" class="muted">Kodiak</text>
+  <text x="650" y="80" text-anchor="middle" font-size="11" font-weight="600" class="accent">人間</text>
+
+  <rect x="306" y="112" width="9" height="9" rx="2" class="ahead"/>
+  <text x="320" y="120" font-size="11" class="muted">人間の判断点</text>
+</svg>

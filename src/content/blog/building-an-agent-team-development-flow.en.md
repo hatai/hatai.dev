@@ -10,13 +10,19 @@ Pelway itself is a service designed to run jobs in a per-task Linux container sa
 
 ## The Flow
 
+![How a task flows from Issue to merge, and who owns each stage](/img/agent-team-flow.en.svg)
+
 The roles are split like this.
 
-- **Conductor**: Grok Bot is the primary. It triages issues, dispatches instructions to implementation threads, and consolidates review results. While it is stopped by its weekly session limit, a Claude background session takes over; the handoff procedure is canonicalized in the spec and a runbook.
-- **Implementation**: GLM threads on T3 Code. One thread per issue implements the change and leaves a fixed-format implementer memo every time.
-- **Review**: Codex is the primary reviewer. High-risk PRs and a sample of normal PRs also get a second review from Claude.
-- **Merge**: hosted Kodiak as the merge queue (adopted via [Issue #300](https://github.com/hatai/Pelway/issues/300)).
-- **Human (me)**: only three things — attaching the ready-for-agent label, merging, and making direction decisions.
+| Role | Owner | What it does |
+| --- | --- | --- |
+| Conductor | Grok Bot (substitute: a Claude background session) | Triage issues, dispatch instructions to implementation threads, consolidate review results |
+| Implementation | GLM (threads on T3 Code) | Implement one issue at a time, leave a fixed-format implementer memo |
+| Review | Codex (second review: Claude) | Review PRs; Claude is added on high-risk PRs and a sample of normal ones |
+| Merge | Kodiak (hosted merge queue, [Issue #300](https://github.com/hatai/Pelway/issues/300)) | Take in PRs that pass |
+| Judgment | Human (me) | Only three things: attach ready-for-agent, merge, decide direction |
+
+While the conductor is stopped by its weekly session limit, Claude takes over; the handoff procedure is canonicalized in the spec and a runbook.
 
 A task flows in this order. An issue is filed, and anything splittable is broken into sub-issues. Once I attach ready-for-agent, the conductor dispatches it to a GLM implementation thread, the resulting PR is reviewed by Codex, and whatever passes enters the merge queue and gets merged.
 
@@ -43,41 +49,25 @@ With this memo, the conductor can issue the next instruction without holding the
 
 **Separate merge queue**: to keep GLM implementation slots from clogging on merge waits, merge handling was split off into Kodiak.
 
-## Benefits (Observed)
+## Benefits and Friction (Observed)
 
 Only things that actually happened, not predictions.
 
-- Implementation, review, and investigation run in parallel. The whole pipeline no longer stalls on a single pending review.
-- Decisions persist as canonical documents — ADRs, the spec, shared skills — so agents never have to re-explain long backgrounds to each other.
-- Division of labor by model strength works: GLM for implementation volume, Codex for review, Claude for second opinions.
-- My work has narrowed down to just the decision points.
+| Aspect | Benefit | Downside / friction |
+| --- | --- | --- |
+| Parallelism | Implementation, review, and investigation run in parallel; nothing stalls on a single pending review | The rate limit does not disappear — it moves; once implementation sped up, review and the merge queue clogged |
+| Canonical docs | Decisions persist in ADRs, the spec, and shared skills, so no long re-briefings between agents | Rules vanish unless written down, and the upkeep is constant |
+| Division of labor | Work splits by model strength (GLM implements, Codex reviews, Claude gives second opinions) | Several subscription usage limits have to be managed at once |
+| Human load | I only have to focus on the decision points | The conductor is a single point of failure and stops at its session limit |
 
-## Friction and Countermeasures
+As countermeasures, I wrote the substitute procedure into a runbook and made the merge queue independent of the GLM implementation slots. But a documented procedure does not guarantee mutual exclusion — the primary and the substitute actually reviewed the same PR ([#155](https://github.com/hatai/Pelway/pull/155)) at the same time. The congestion only relocated, the rate limit itself remains, and the constant effort of writing canonical docs is honestly heavy.
 
-There is real friction too.
-
-- **The conductor is a single point of failure**: it stops when it hits the session limit. I wrote the substitute procedure into a runbook, but a double-command incident actually happened — the primary and the substitute reviewed the same PR ([#155](https://github.com/hatai/Pelway/pull/155)) at the same time. A documented procedure does not guarantee mutual exclusion; that issue remains.
-- **The bottleneck moves, it does not disappear**: once implementation sped up, review and the merge queue became the new rate limits. Splitting the queue out of the GLM slots helped, but the congestion just relocated — the rate limit itself is still there.
-- **Canonical docs cost upkeep**: rules vanish unless they are written into the spec, skills, or AGENTS.md. The writing effort is constant, and it is honestly heavy.
-- **Managing usage limits in parallel**: several subscription limits have to be watched at once, and the moment one runs dry the whole flow is throttled to that slot.
+![The rate limit moving from implementation to review to the merge queue](/img/bottleneck-moves.en.svg)
 
 ## One Artifact from the Flow: ADR 0012
 
 An example of what this flow produces. ADR 0012 fixes the production topology to a single host running Docker Compose, a Caddy reverse proxy, and systemd timers ([PR #429](https://github.com/hatai/Pelway/pull/429)).
 
 The content splits the networks into edge, app, data, and sandbox, with Postgres unreachable from the sandbox. It went through this flow's exact path: filed as an issue, labeled ready-for-agent, implemented by GLM (the ADR text plus a structural test that checks existence and link resolution), then reviewed by Codex.
-
-## If You Want to Reproduce It
-
-If I were building the same flow again, I would set things up in this order.
-
-- [ ] Split roles to one agent per role, and always state the assignee, model, and effort
-- [ ] Put canonical documents — handoffs, roles, operational rules — in repository files (spec, runbook, AGENTS.md)
-- [ ] Split issues wherever possible, and funnel work to agents through a single label
-- [ ] Fix the implementer-memo format and require it every time
-- [ ] Assign review to a different agent than implementation, and define when a second review applies
-- [ ] Make the merge queue independent of implementation slots
-- [ ] List and narrow the human decision points
-- [ ] Write the substitute procedure for when the conductor stops into a runbook
 
 This flow itself will keep changing, and I will write about it again when it does. If you have questions, feel free to reach me at [me@hatai.dev](mailto:me@hatai.dev).

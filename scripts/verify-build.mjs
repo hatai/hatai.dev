@@ -21,9 +21,29 @@ const pages = [
     'Building an Agent Team Development Flow for Pelway',
   ],
   [
+    'blog/building-an-agent-team-development-flow/index.html',
+    '/img/agent-team-flow.en.svg',
+  ],
+  [
+    'blog/building-an-agent-team-development-flow/index.html',
+    '/img/bottleneck-moves.en.svg',
+  ],
+  [
     'ja/blog/building-an-agent-team-development-flow/index.html',
     'エージェントチームで Pelway を開発するフロー',
   ],
+  [
+    'ja/blog/building-an-agent-team-development-flow/index.html',
+    '/img/agent-team-flow.ja.svg',
+  ],
+  [
+    'ja/blog/building-an-agent-team-development-flow/index.html',
+    '/img/bottleneck-moves.ja.svg',
+  ],
+  ['img/agent-team-flow.en.svg', '<svg'],
+  ['img/agent-team-flow.ja.svg', '<svg'],
+  ['img/bottleneck-moves.en.svg', '<svg'],
+  ['img/bottleneck-moves.ja.svg', '<svg'],
   [
     'blog/why-i-built-this-site-with-tanstack-solid-start/index.html',
     'Why I Built This Site with TanStack Solid Start',
