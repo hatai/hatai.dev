@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" role="img" aria-label="The rate limit moves from implementation to review to the merge queue">
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; }
+    .fg { fill: #1c1b18; }
+    .muted { fill: #6f6c66; }
+    .box { fill: #fbfaf8; stroke: #d8d5cd; }
+    .edge { stroke: #b6b2a8; fill: none; }
+    .accent { fill: #9a3412; }
+    .ahead { fill: #9a3412; }
+    .hot { fill: #fbfaf8; stroke: #9a3412; stroke-width: 2; }
+    .queue { fill: #fbfaf8; stroke: #9a3412; }
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #e9e7e2; }
+      .muted { fill: #a09d95; }
+      .box { fill: #1a1a18; stroke: #3a3935; }
+      .edge { stroke: #5b5952; }
+      .accent, .ahead { fill: #fb923c; }
+      .hot { fill: #1a1a18; stroke: #fb923c; }
+      .queue { fill: #1a1a18; stroke: #fb923c; }
+    }
+  </style>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" class="ahead"/>
+    </marker>
+  </defs>
+
+  <!-- row 1: implementation is the bottleneck -->
+  <text x="16" y="56" font-size="12" class="fg">Impl. limited</text>
+  <rect x="142" y="22" width="110" height="40" rx="8" class="queue"/>
+  <rect x="146" y="26" width="110" height="40" rx="8" class="queue"/>
+  <rect x="150" y="30" width="110" height="40" rx="8" class="hot"/>
+  <rect x="286" y="30" width="110" height="40" rx="8" class="box"/>
+  <rect x="422" y="30" width="110" height="40" rx="8" class="box"/>
+  <rect x="558" y="30" width="110" height="40" rx="8" class="box"/>
+  <line x1="260" y1="50" x2="282" y2="50" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="396" y1="50" x2="418" y2="50" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="532" y1="50" x2="554" y2="50" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <text x="205" y="55" text-anchor="middle" font-size="12" class="fg">Implement</text>
+  <text x="341" y="55" text-anchor="middle" font-size="12" class="fg">Review</text>
+  <text x="477" y="55" text-anchor="middle" font-size="11" class="fg">Merge queue</text>
+  <text x="613" y="55" text-anchor="middle" font-size="12" class="fg">Merge</text>
+
+  <!-- row 2: review is the bottleneck -->
+  <text x="16" y="130" font-size="12" class="fg">Review limited</text>
+  <rect x="150" y="104" width="110" height="40" rx="8" class="box"/>
+  <rect x="278" y="96" width="110" height="40" rx="8" class="queue"/>
+  <rect x="282" y="100" width="110" height="40" rx="8" class="queue"/>
+  <rect x="286" y="104" width="110" height="40" rx="8" class="hot"/>
+  <rect x="422" y="104" width="110" height="40" rx="8" class="box"/>
+  <rect x="558" y="104" width="110" height="40" rx="8" class="box"/>
+  <line x1="260" y1="124" x2="282" y2="124" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="396" y1="124" x2="418" y2="124" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="532" y1="124" x2="554" y2="124" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <text x="205" y="129" text-anchor="middle" font-size="12" class="fg">Implement</text>
+  <text x="341" y="129" text-anchor="middle" font-size="12" class="fg">Review</text>
+  <text x="477" y="129" text-anchor="middle" font-size="11" class="fg">Merge queue</text>
+  <text x="613" y="129" text-anchor="middle" font-size="12" class="fg">Merge</text>
+
+  <!-- row 3: merge queue is the bottleneck -->
+  <text x="16" y="204" font-size="12" class="fg">Queue limited</text>
+  <rect x="150" y="178" width="110" height="40" rx="8" class="box"/>
+  <rect x="286" y="178" width="110" height="40" rx="8" class="box"/>
+  <rect x="414" y="170" width="110" height="40" rx="8" class="queue"/>
+  <rect x="418" y="174" width="110" height="40" rx="8" class="queue"/>
+  <rect x="422" y="178" width="110" height="40" rx="8" class="hot"/>
+  <rect x="558" y="178" width="110" height="40" rx="8" class="box"/>
+  <line x1="260" y1="198" x2="282" y2="198" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="396" y1="198" x2="418" y2="198" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="532" y1="198" x2="554" y2="198" class="edge" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <text x="205" y="203" text-anchor="middle" font-size="12" class="fg">Implement</text>
+  <text x="341" y="203" text-anchor="middle" font-size="12" class="fg">Review</text>
+  <text x="477" y="203" text-anchor="middle" font-size="11" class="fg">Merge queue</text>
+  <text x="613" y="203" text-anchor="middle" font-size="12" class="fg">Merge</text>
+
+  <text x="360" y="236" text-anchor="middle" font-size="12" class="muted">The bottleneck moved downstream — it never went away</text>
+</svg>
