@@ -74,4 +74,10 @@ One more thing: it's hard to tell whether the work is actually heading where I w
 
 ## Closing
 
-The home machine is the hub now, with the agents connected over MCP. Still under construction. Next time I'll dig into the connector and where the board ends up living. Reach me at [me@hatai.dev](mailto:me@hatai.dev).
+The home machine is the hub now, with the agents connected over MCP. Still under construction.
+
+How this article got made is part of the environment too. Muse picked the theme, interviewed me about why I connected them, what changed, and what's bothering me, and a T3 writing thread wrote it up from my answers. At first I had posts auto-generated from a brief alone, and the first draft came out thin and didn't sound like me. So I changed the generation pipeline itself, adding an interview step between topic-finding and writing. The plan is to run the "find topic, interview, write" loop weekly from here.
+
+Even when agents do the writing, you still need a step that puts the human's judgment and voice back in. This one article made that clear.
+
+Next time I'll dig into the connector and where the board ends up living. Reach me at [me@hatai.dev](mailto:me@hatai.dev).
