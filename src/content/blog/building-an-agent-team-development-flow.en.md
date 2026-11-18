@@ -4,6 +4,8 @@ description: How I run development of my personal project Pelway with a team of 
 date: 2026-11-18
 ---
 
+> This article was drafted by AI using the agent-team development flow described below, and reviewed and edited by the author.
+
 I am developing Pelway, a personal project, with a team of AI agents where each role is assigned to a different agent. A conductor, an implementer, a reviewer, and a merge queue handle the work, and I only look at the decision points. This post describes how the flow works, plus the benefits and friction I have observed while running it.
 
 Pelway itself is a service designed to run jobs in a per-task Linux container sandbox. It is not in production yet, but the development flow is already running — and that seemed more worth writing about, so it comes first.
