@@ -14,7 +14,7 @@ I run two agent setups. One is Muse, a personal agent that lives on a Linux VM. 
 
 ![Architecture diagram connecting Muse, the T3 Connect relay, T3 Code on the home machine, and Grok Bot](/blog/dev-environment-muse-t3-mcp/architecture.svg)
 
-The flow works like this. I give Muse a topic and direction. Muse connects through the MCP endpoint exposed by the T3 Connect relay to T3 on the home machine, and sends instructions to a thread on the hatai.dev project. The thread writes code in a worktree and opens a PR on GitHub. The dashed Grok Bot route at the bottom of the diagram is still being set up; more on that later.
+The flow works like this. I give Muse a topic and direction. Muse connects through the MCP endpoint exposed by the T3 Connect relay to T3 on the home machine, launches a thread on the hatai.dev project, and sends it instructions. The thread writes code in a worktree and opens a PR on GitHub. The dashed Grok Bot route at the bottom of the diagram is still being set up; more on that later.
 
 ## Why This Setup
 
@@ -28,15 +28,15 @@ The connector on the Muse side is self-built. Rather than passing through every 
 
 | Group | Permitted operations |
 | --- | --- |
-| Read-only | Reading threads and messages |
-| Operable | Sending instructions to existing threads |
-| Off the list | Thread creation, project creation |
+| Read-only | Reading environments, projects, and threads |
+| Operable | `t3_thread_launch` (start a thread), `t3_thread_send` (send instructions to a thread) |
+| Off the list | `t3_project_create` (project creation) |
 
-As currently configured, Muse cannot invoke anything that creates new resources. Extending the allow-list is a manual step on my side, so permissions cannot quietly grow.
+Muse is allowed to launch threads and send instructions, and the drafting and revision of blog posts runs on exactly those two tools. Project creation stays off the list; adding a project is something I do myself in the T3 app. Extending the allow-list is a manual step on my side, so permissions cannot quietly grow.
 
 ## What Actually Ran on It
 
-This connection has already done real work. For another post on this blog, a thread on the hatai.dev project carried a draft through revision and all the way to a PR. Muse played the editor, collecting material and writing the brief; the T3 thread was the writer. This very article was produced through the same pipeline.
+This connection has already done real work. For another post on this blog, Muse launched a thread on the hatai.dev project with `t3_thread_launch` and drove it through draft, revision, and PR creation with `t3_thread_send`. Muse played the editor, collecting material and writing the brief; the T3 thread was the writer. This very article was produced through the same pipeline. Muse started its writing thread via `t3_thread_launch` too.
 
 ## Connecting Grok Bot
 
