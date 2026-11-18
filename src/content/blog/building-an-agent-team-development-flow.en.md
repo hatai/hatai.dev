@@ -1,5 +1,5 @@
 ---
-title: Building an Agent Team Development Flow for Pelway
+title: Building a Development Flow Run by an AI Agent Team
 description: How I run development of my personal project Pelway with a team of AI agents — the role split, canonical docs, merge queue, and the benefits and friction I have actually observed.
 date: 2026-11-18
 ---

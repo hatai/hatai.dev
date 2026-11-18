@@ -13,12 +13,12 @@ const pages = [
   ['ja/index.html', ' lang="ja">'],
   ['ja/index.html', '濱田 泰源'],
   ['blog/index.html', 'Why I Built This Site with TanStack Solid Start'],
-  ['blog/index.html', 'Building an Agent Team Development Flow for Pelway'],
+  ['blog/index.html', 'Building a Development Flow Run by an AI Agent Team'],
   ['ja/blog/index.html', 'このサイトを TanStack Solid Start で作った理由'],
-  ['ja/blog/index.html', 'エージェントチームで Pelway を開発するフロー'],
+  ['ja/blog/index.html', 'AIエージェントチームで回す開発フローを組んだ話'],
   [
     'blog/building-an-agent-team-development-flow/index.html',
-    'Building an Agent Team Development Flow for Pelway',
+    'Building a Development Flow Run by an AI Agent Team',
   ],
   [
     'blog/building-an-agent-team-development-flow/index.html',
@@ -34,7 +34,7 @@ const pages = [
   ],
   [
     'ja/blog/building-an-agent-team-development-flow/index.html',
-    'エージェントチームで Pelway を開発するフロー',
+    'AIエージェントチームで回す開発フローを組んだ話',
   ],
   [
     'ja/blog/building-an-agent-team-development-flow/index.html',
