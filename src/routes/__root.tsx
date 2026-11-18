@@ -6,8 +6,8 @@ import {
   useLocation,
 } from '@tanstack/solid-router'
 
-import { HydrationScript } from 'solid-js/web'
-import { Suspense } from 'solid-js'
+import { HydrationScript } from '@solidjs/web'
+import { Loading } from 'solid-js'
 
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
@@ -39,9 +39,9 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body>
-        <Suspense>
+        <Loading>
           <RootLayout />
-        </Suspense>
+        </Loading>
         <Scripts />
       </body>
     </html>
