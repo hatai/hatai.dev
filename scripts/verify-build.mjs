@@ -13,16 +13,16 @@ const pages = [
   ['ja/index.html', ' lang="ja">'],
   ['ja/index.html', '濱田 泰源'],
   ['blog/index.html', 'Why I Built This Site with TanStack Solid Start'],
-  ['blog/index.html', 'Deciding the Production Topology for Pelway (ADR 0012)'],
+  ['blog/index.html', 'Building an Agent Team Development Flow for Pelway'],
   ['ja/blog/index.html', 'このサイトを TanStack Solid Start で作った理由'],
-  ['ja/blog/index.html', 'Pelway の本番構成を単一ホストに決めた（ADR 0012）'],
+  ['ja/blog/index.html', 'エージェントチームで Pelway を開発するフロー'],
   [
-    'blog/deciding-production-topology-adr-0012/index.html',
-    'Deciding the Production Topology for Pelway (ADR 0012)',
+    'blog/building-an-agent-team-development-flow/index.html',
+    'Building an Agent Team Development Flow for Pelway',
   ],
   [
-    'ja/blog/deciding-production-topology-adr-0012/index.html',
-    'Pelway の本番構成を単一ホストに決めた（ADR 0012）',
+    'ja/blog/building-an-agent-team-development-flow/index.html',
+    'エージェントチームで Pelway を開発するフロー',
   ],
   [
     'blog/why-i-built-this-site-with-tanstack-solid-start/index.html',

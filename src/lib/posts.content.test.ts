@@ -2,12 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { getPost, getPosts, getTranslation, parsePostFile, posts } from './posts'
 
 const SLUGS = [
-  'deciding-production-topology-adr-0012',
+  'building-an-agent-team-development-flow',
   'why-i-built-this-site-with-tanstack-solid-start',
 ] as const
 
 const DATES: Record<(typeof SLUGS)[number], string> = {
-  'deciding-production-topology-adr-0012': '2026-11-18',
+  'building-an-agent-team-development-flow': '2026-11-18',
   'why-i-built-this-site-with-tanstack-solid-start': '2026-08-24',
 }
 
