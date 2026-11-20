@@ -5,7 +5,7 @@ import { localePath, ui, type Locale } from '../../lib/i18n'
 export function PostPage(props: { locale: Locale }) {
   const params = useParams({ strict: false })
   const t = ui[props.locale]
-  const post = () => getPost(props.locale, params().slug)
+  const post = () => getPost(props.locale, params().slug ?? '')
   const translated = () => {
     const current = post()
     return current ? getTranslation(current) : undefined
