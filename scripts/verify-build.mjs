@@ -22,6 +22,34 @@ const pages = [
     'ja/blog/why-i-built-this-site-with-tanstack-solid-start/index.html',
     'このサイトを TanStack Solid Start で作った理由',
   ],
+  [
+    'blog/index.html',
+    'Connecting a Personal AI Agent to My Home Dev Machine over MCP',
+  ],
+  [
+    'ja/blog/index.html',
+    '個人AIエージェントと自宅の開発マシンを MCP でつないだ話',
+  ],
+  [
+    'blog/dev-environment-muse-t3-mcp/index.html',
+    'Connecting a Personal AI Agent to My Home Dev Machine over MCP',
+  ],
+  [
+    'ja/blog/dev-environment-muse-t3-mcp/index.html',
+    '個人AIエージェントと自宅の開発マシンを MCP でつないだ話',
+  ],
+  [
+    'blog/dev-environment-muse-t3-mcp/index.html',
+    'class="footnotes"',
+  ],
+  [
+    'ja/blog/dev-environment-muse-t3-mcp/index.html',
+    'class="footnotes"',
+  ],
+  [
+    'blog/dev-environment-muse-t3-mcp/architecture.svg',
+    '<svg',
+  ],
   ['index.html', 'gitz'],
   ['ja/index.html', 'gitz'],
   ['404.html', 'Page not found'],
